@@ -1,0 +1,41 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        String           @id @default(auto()) @map("_id") @db.ObjectId
+  email     String           @unique
+  password  String
+  name      String
+  skills    String[]
+  interests String[]
+  createdAt DateTime         @default(now())
+  recommendations Recommendation[] // Relation to Recommendation
+}
+
+model Recommendation {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String   @db.ObjectId
+  careerId      String   @db.ObjectId
+  saved         Boolean  @default(false)
+  createdAt     DateTime @default(now())
+
+  // Relations
+  user          User     @relation(fields: [userId], references: [id])
+  career        Career   @relation(fields: [careerId], references: [id])
+}
+
+model Career {
+  id            String           @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  requiredSkills String[]
+  salaryRange   String
+  demand        Int
+  recommendations Recommendation[] // Relation to Recommendation
+}
