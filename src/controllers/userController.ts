@@ -5,66 +5,75 @@ import bcrypt from "bcryptjs";
 const prisma = new PrismaClient();
 
 export const editAccount = async (req: Request, res: Response): Promise<void> => {
-  const userId = req.body.userId; // Extract from req or decoded JWT
+    const userId = req.body.userId; // Extracted by the JWT middleware
     const { name, email, password } = req.body;
-
+  
     try {
-        const user = await prisma.user.findUnique({ where: { id: userId } });
-        if (!user) {
+      // Find the current user
+      const user = await prisma.user.findUnique({ where: { id: userId } });
+      if (!user) {
         res.status(404).json({ error: "User not found" });
         return;
-        }
-
-        if (email && email !== user.email) {
+      }
+  
+      // Check if email is being updated and if it's already in use
+      if (email && email !== user.email) {
         const existingUser = await prisma.user.findUnique({ where: { email } });
         if (existingUser) {
-            res.status(400).json({ error: "Email is already in use" });
-            return;
+          res.status(400).json({ error: "Email is already in use" });
+          return;
         }
-        }
-
-        let hashedPassword = user.password;
-        if (password) {
+      }
+  
+      // Hash the password if it's being updated
+      let hashedPassword = user.password;
+      if (password) {
         hashedPassword = await bcrypt.hash(password, 10);
-        }
-
-        const updatedUser = await prisma.user.update({
+      }
+  
+      // Update the user
+      const updatedUser = await prisma.user.update({
         where: { id: userId },
         data: {
-            name: name || user.name,
-            email: email || user.email,
-            password: hashedPassword,
+          name: name || user.name,
+          email: email || user.email,
+          password: hashedPassword,
         },
-        });
-
-        res.status(200).json({
+      });
+  
+      res.status(200).json({
         message: "Account updated successfully",
         user: {
-            name: updatedUser.name,
-            email: updatedUser.email,
+          name: updatedUser.name,
+          email: updatedUser.email,
         },
-        });
+      });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-};
+  };
+  
 
-export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
-    const userId = req.body.userId;
-
+  export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
+    const userId = req.body.userId; // Extracted from the middleware
+  
     try {
-        const user = await prisma.user.findUnique({ where: { id: userId } });
-        if (!user) {
+      // Verify if the user exists
+      const user = await prisma.user.findUnique({ where: { id: userId } });
+      if (!user) {
         res.status(404).json({ error: "User not found" });
         return;
-        }
-
-        await prisma.user.delete({ where: { id: userId } });
-
-        res.status(200).json({ message: "Account deleted successfully" });
+      }
+  
+      // Delete the user
+      await prisma.user.delete({ where: { id: userId } });
+  
+      res.status(200).json({ message: "Account deleted successfully" });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Internal Server Error" });
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
     }
-};
+  };
+  
+
