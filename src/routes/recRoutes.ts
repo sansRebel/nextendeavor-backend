@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.post("/", generateRecommendations);
 router.post("/save", authenticateUser, saveRecommendation);
-router.get("/saved", getSavedRecommendations);
+router.get("/saved", authenticateUser, getSavedRecommendations);
 
 export default router;
