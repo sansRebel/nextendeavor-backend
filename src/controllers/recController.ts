@@ -57,6 +57,7 @@ try {
 export const saveRecommendation = async(req: Request, res: Response): Promise<void> =>{
     const userId = req.userId;
     const {careerId} = req.body;
+    console.log(careerId);
 
     if(!userId){
         res.status(401).json({ error: "Unauthorized personnel"});
