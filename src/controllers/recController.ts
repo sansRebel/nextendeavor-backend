@@ -106,3 +106,47 @@ export const saveRecommendation = async(req: Request, res: Response): Promise<vo
         res.status(500).json({ error: "Internal Server Error" });
     }
 };
+
+
+export const getSavedRecommendations = async(req: Request, res: Response): Promise<void> =>{
+    const userId = req.userId;
+    if (!userId) {
+        res.status(401).json({ error: "Unauthorized" });
+            return;
+        }
+        
+        try {
+            // Fetch saved recommendations for the user
+            const savedRecommendations = await prisma.recommendation.findMany({
+            where: {
+                userId,
+                saved: true, // Only fetch saved recommendations
+            },
+            include: {
+                career: true, // Include career details
+            },
+            });
+        
+            if (savedRecommendations.length === 0) {
+            res.status(404).json({ error: "No saved recommendations found" });
+            return;
+            }
+        
+            // Format the response
+            const recommendations = savedRecommendations.map((rec) => ({
+            id: rec.id,
+            careerId: rec.careerId,
+            title: rec.career.title,
+            description: rec.career.description,
+            requiredSkills: rec.career.requiredSkills,
+            salaryRange: rec.career.salaryRange,
+            demand: rec.career.demand,
+            savedAt: rec.createdAt,
+            }));
+        
+            res.status(200).json({ recommendations });
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Failed to fetch saved recommendations" });
+        }
+};
