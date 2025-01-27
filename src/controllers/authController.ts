@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/jwtUtils";
+import jwt from "jsonwebtoken";
 
 const prisma = new PrismaClient();
 
@@ -59,6 +60,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     const token = generateToken(user.id);
+    console.log("Generated Token Payload:", jwt.decode(token));
 
     res.status(200).json({
         message: "Login successful",
