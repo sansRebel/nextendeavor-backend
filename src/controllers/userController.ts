@@ -52,7 +52,7 @@ export const editAccount = async (req: Request, res: Response): Promise<void> =>
   
 
   export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
-    const userId = req.body.userId; // Extracted from the middleware
+    const userId = req.userId; // Extracted from the middleware
   
     try {
       // Verify if the user exists
