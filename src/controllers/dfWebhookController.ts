@@ -19,8 +19,8 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       ? parameters.interests.split(/[, ]+/).map((i: string) => i.trim().toLowerCase())
       : [];
 
-      console.log("Extracted Skills:", skills);
-      console.log("Extracted Interests:", interests);
+      console.log("Extracted Skills:", req.body.queryResult.parameters.skills);
+      console.log("Extracted Interests:", req.body.queryResult.parameters.interests);
 
       // Add recommendation logic here...
     }
