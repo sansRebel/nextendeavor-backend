@@ -3,32 +3,70 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+
+const extractRelevantWords = (input: string): string[] => {
+  const stopWords = [
+    "i", "am", "i'm", "good", "at", "and", "with", "love", "in", "for", "the", "a"
+  ];
+
+  return input
+    .toLowerCase() // Convert to lowercase
+    .replace(/[^\w\s]/g, "") // Remove punctuation (e.g., periods, commas)
+    .split(/\s+/) // Split into words by whitespace
+    .filter((word) => !stopWords.includes(word)); // Remove stop words
+};
+
+
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
   const intentName = req.body.queryResult.intent.displayName;
   const parameters = req.body.queryResult.parameters || {};
 
   console.log("Intent Name:", intentName);
-  console.log("Raw Parameters:", parameters); // Log raw parameters for debugging
+  console.log("Raw Parameters:", parameters);
 
   try {
     if (intentName === "Career Recommendation") {
-      // Normalize parameter names
-      const skillsRaw = parameters.skills || parameters.Skills || "";
-      const interestsRaw = parameters.interests || parameters.Interests || "";
+      const skillsRaw = parameters.skills || "";
+      const interestsRaw = parameters.interests || "";
 
-      // Clean and process the extracted values
-      const skills = skillsRaw
-        ? skillsRaw.split(/[, ]+/).map((s: string) => s.trim().toLowerCase())
-        : [];
-      const interests = interestsRaw
-        ? interestsRaw.split(/[, ]+/).map((i: string) => i.trim().toLowerCase())
-        : [];
+      // Extract relevant words
+      const skills = extractRelevantWords(skillsRaw);
+      const interests = extractRelevantWords(interestsRaw);
 
-      console.log("Extracted Skills:", skills);
-      console.log("Extracted Interests:", interests);
+      console.log("Cleaned Skills:", skills);
+      console.log("Cleaned Interests:", interests);
 
-      // Add recommendation logic here...
+      const careers = await prisma.career.findMany();
+      const recommendations = careers
+        .map((career) => {
+          let skillScore = 0;
+          let interestScore = 0;
+      
+          // Match skills
+          if (career.requiredSkills) {
+            skillScore = career.requiredSkills.filter((skill) =>
+              skills.includes(skill.toLowerCase())
+            ).length;
+          }
+      
+          // Match interests
+          if (career.description) {
+            interestScore = interests.filter((interest) =>
+              career.description.toLowerCase().includes(interest.toLowerCase())
+            ).length;
+          }
+      
+          return { ...career, score: skillScore + interestScore };
+        })
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 3); // Limit to top 3 recommendations
+      
       res.json({
+        fulfillmentText: recommendations.map((rec) =>
+          `Title: ${rec.title}\nDescription: ${rec.description}`
+        ).join("\n"),
+      });
+            res.json({
         fulfillmentText: `I’ve received your skills: ${skills.join(
           ", "
         )}, and interests: ${interests.join(", ")}.`,
@@ -41,6 +79,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     res.status(500).send("Internal Server Error");
   }
 };
+
 
 
 
