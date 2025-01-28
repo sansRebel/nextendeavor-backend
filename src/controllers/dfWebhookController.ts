@@ -36,49 +36,56 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       console.log("Cleaned Skills:", skills);
       console.log("Cleaned Interests:", interests);
 
+      // Add recommendation logic here...
       const careers = await prisma.career.findMany();
       const recommendations = careers
         .map((career) => {
           let skillScore = 0;
           let interestScore = 0;
-      
-          // Match skills
+
           if (career.requiredSkills) {
             skillScore = career.requiredSkills.filter((skill) =>
               skills.includes(skill.toLowerCase())
             ).length;
           }
-      
-          // Match interests
+
           if (career.description) {
             interestScore = interests.filter((interest) =>
               career.description.toLowerCase().includes(interest.toLowerCase())
             ).length;
           }
-      
+
           return { ...career, score: skillScore + interestScore };
         })
         .sort((a, b) => b.score - a.score)
-        .slice(0, 3); // Limit to top 3 recommendations
-      
-      res.json({
-        fulfillmentText: recommendations.map((rec) =>
+        .slice(0, 3);
+
+      if (recommendations.length > 0) {
+        const responseText = recommendations.map((rec) =>
           `Title: ${rec.title}\nDescription: ${rec.description}`
-        ).join("\n"),
-      });
-            res.json({
-        fulfillmentText: `I’ve received your skills: ${skills.join(
-          ", "
-        )}, and interests: ${interests.join(", ")}.`,
-      });
-    } else {
-      res.json({ fulfillmentText: "Sorry, I didn’t understand that request." });
+        ).join("\n");
+        res.json({
+          fulfillmentText: `Here are your career recommendations:\n\n${responseText}`,
+        });
+      } else {
+        res.json({ fulfillmentText: "Sorry, no recommendations found." });
+      }
+
+      return; // Prevent further execution
     }
+
+    // Default response for unknown intents
+    res.json({ fulfillmentText: "Sorry, I didn’t understand that request." });
   } catch (error) {
     console.error("Dialogflow Webhook Error:", error);
-    res.status(500).send("Internal Server Error");
+
+    // Ensure the error response is only sent once
+    if (!res.headersSent) {
+      res.status(500).send("Internal Server Error");
+    }
   }
 };
+
 
 
 
