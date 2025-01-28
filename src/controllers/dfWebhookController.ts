@@ -26,65 +26,77 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
 
   try {
     if (intentName === "Career Recommendation") {
-      const skillsRaw = parameters.skills || "";
-      const interestsRaw = parameters.interests || "";
+      const skills = extractRelevantWords(parameters.skills || "");
+      const interests = extractRelevantWords(parameters.interests || "");
 
-      // Extract relevant words
-      const skills = extractRelevantWords(skillsRaw);
-      const interests = extractRelevantWords(interestsRaw);
+      console.log("Extracted Skills:", skills);
+      console.log("Extracted Interests:", interests);
 
-      console.log("Cleaned Skills:", skills);
-      console.log("Cleaned Interests:", interests);
-
-      // Add recommendation logic here...
+      // Fetch careers and calculate scores
       const careers = await prisma.career.findMany();
       const recommendations = careers
         .map((career) => {
           let skillScore = 0;
           let interestScore = 0;
 
+          // Match skills
           if (career.requiredSkills) {
             skillScore = career.requiredSkills.filter((skill) =>
               skills.includes(skill.toLowerCase())
             ).length;
           }
 
-          if (career.description) {
+          // Match interests
+          if (interests) {
             interestScore = interests.filter((interest) =>
               career.description.toLowerCase().includes(interest.toLowerCase())
             ).length;
           }
 
-          return { ...career, score: skillScore + interestScore };
+          const totalScore = skillScore + interestScore;
+
+          return {
+            id: career.id,
+            title: career.title,
+            description: career.description,
+            salaryRange: career.salaryRange,
+            demand: career.demand,
+            requiredSkills: career.requiredSkills,
+            totalScore,
+          };
         })
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 3);
+        .filter((career) => career.totalScore > 0) // Exclude careers with no matches
+        .sort((a, b) => b.totalScore - a.totalScore) // Sort by score
+        .slice(0, 3); // Limit to top 3
 
-      if (recommendations.length > 0) {
-        const responseText = recommendations.map((rec) =>
-          `Title: ${rec.title}\nDescription: ${rec.description}`
-        ).join("\n");
-        res.json({
-          fulfillmentText: `Here are your career recommendations:\n\n${responseText}`,
-        });
-      } else {
-        res.json({ fulfillmentText: "Sorry, no recommendations found." });
-      }
-
-      return; // Prevent further execution
+      // Format the chatbot's response (simple success message)
+      res.json({
+        fulfillmentText: "Your career path is generated successfully. You can find it below.",
+        fulfillmentMessages: [
+          {
+            text: {
+              text: ["Your career path is generated successfully. You can find it below."],
+            },
+          },
+        ],
+        payload: {
+          recommendations, // Attach the detailed recommendations for the frontend
+        },
+      });
+      return;
     }
 
-    // Default response for unknown intents
+    // Default response for other intents
     res.json({ fulfillmentText: "Sorry, I didn’t understand that request." });
+    return;
   } catch (error) {
     console.error("Dialogflow Webhook Error:", error);
 
-    // Ensure the error response is only sent once
-    if (!res.headersSent) {
-      res.status(500).send("Internal Server Error");
-    }
+    res.status(500).send("Internal Server Error");
+    return;
   }
 };
+
 
 
 
