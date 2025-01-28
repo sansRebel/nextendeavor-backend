@@ -69,6 +69,8 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
         .sort((a, b) => b.totalScore - a.totalScore) // Sort by score
         .slice(0, 3); // Limit to top 3
 
+      console.log("Recommendation response:", recommendations)
+
       // Format the chatbot's response (simple success message)
       res.json({
         fulfillmentText: "Your career path is generated successfully. You can find it below.",
@@ -85,6 +87,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       });
       return;
     }
+
 
     // Default response for other intents
     res.json({ fulfillmentText: "Sorry, I didn’t understand that request." });
