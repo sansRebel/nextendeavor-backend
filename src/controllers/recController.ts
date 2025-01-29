@@ -150,3 +150,34 @@ export const getSavedRecommendations = async(req: Request, res: Response): Promi
             res.status(500).json({ error: "Failed to fetch saved recommendations" });
         }
 };
+
+export const clearRecommendations = async (req: Request, res: Response): Promise<void> => {
+    const userId = req.userId; // Extract userId from JWT middleware
+
+    if (!userId) {
+        res.status(401).json({ error: "Unauthorized" });
+        return;
+    }
+
+    try {
+        // Check if the user has any saved recommendations
+        const existingRecommendations = await prisma.recommendation.findMany({
+            where: { userId, saved: true },
+        });
+
+        if (existingRecommendations.length === 0) {
+            res.status(404).json({ error: "No saved recommendations found to clear." });
+            return;
+        }
+
+        // Delete all saved recommendations for this user
+        await prisma.recommendation.deleteMany({
+            where: { userId },
+        });
+
+        res.status(200).json({ message: "All saved recommendations have been cleared." });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Failed to clear recommendations" });
+    }
+};
