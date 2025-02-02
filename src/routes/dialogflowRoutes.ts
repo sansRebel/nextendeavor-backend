@@ -13,5 +13,6 @@ router.use(
 
 // Webhook route for Dialogflow
 router.post("/webhook", dialogflowWebhook);
+router.post("/chat", dialogflowWebhook)
 
 export default router;

@@ -63,11 +63,16 @@ const extractRelevantWords = (input: string): string[] => {
 
 
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
+  console.log("🔹 Received webhook request:", JSON.stringify(req.body, null, 2));
   const intentName = req.body.queryResult.intent.displayName;
   const parameters = req.body.queryResult.parameters || {};
 
+  
+
   console.log("Intent Name:", intentName);
   console.log("Raw Parameters:", parameters);
+
+  
 
   try {
     if (intentName === "Career Recommendation") {
