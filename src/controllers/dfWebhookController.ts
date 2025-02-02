@@ -2,17 +2,15 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { SessionsClient } from "@google-cloud/dialogflow";
 import dotenv from "dotenv";
-import path from "path";
 
 dotenv.config();
 const prisma = new PrismaClient();
 
+const googleCredentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON || "{}");
 
-const sessionClient = new SessionsClient({
-  keyFilename: path.join(__dirname, "../config/formal-ember-449115-p8-afdd584d1a28.json"),
-});
+const sessionClient = new SessionsClient({ credentials: googleCredentials });
 
-const projectId = require("../config/formal-ember-449115-p8-afdd584d1a28.json").project_id;
+const projectId = googleCredentials.project_id;
 
 export const sendMessageToDialogflow = async (req: Request, res: Response) => {
   try {
