@@ -1,60 +1,13 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { SessionsClient } from "@google-cloud/dialogflow";
-import dotenv from "dotenv";
 
-dotenv.config();
 const prisma = new PrismaClient();
-
-const googleCredentials = JSON.parse(process.env.GOOGLE_APPLICATION_CREDENTIALS_JSON || "{}");
-
-const sessionClient = new SessionsClient({ credentials: googleCredentials });
-
-const projectId = googleCredentials.project_id;
-
-export const sendMessageToDialogflow = async (req: Request, res: Response): Promise<void> => {
-  try {
-    const { message, sessionId } = req.body;
-
-    if (!message) {
-      res.status(400).json({ error: "Message is required." });
-      return;
-    }
-
-    const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
-
-    const request = {
-      session: sessionPath,
-      queryInput: {
-        text: {
-          text: message,
-          languageCode: "en",
-        },
-      },
-    };
-
-    const responses = await sessionClient.detectIntent(request);
-    const result = responses[0].queryResult;
-
-    res.json({
-      response: result?.fulfillmentText,
-      parameters: result?.parameters?.fields || {},
-    });
-
-  } catch (error) {
-    console.error("Dialogflow Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
 
 
 const extractRelevantWords = (input: string): string[] => {
   const stopWords = [
     "i", "am", "i'm", "good", "at", "and", "with", "love", "in", "for", "the", "a"
   ];
-
-
-
 
   return input
     .toLowerCase() // Convert to lowercase
@@ -65,16 +18,11 @@ const extractRelevantWords = (input: string): string[] => {
 
 
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
-  console.log("🔹 Received webhook request:", JSON.stringify(req.body, null, 2));
   const intentName = req.body.queryResult.intent.displayName;
   const parameters = req.body.queryResult.parameters || {};
 
-  
-
   console.log("Intent Name:", intentName);
   console.log("Raw Parameters:", parameters);
-
-  
 
   try {
     if (intentName === "Career Recommendation") {
