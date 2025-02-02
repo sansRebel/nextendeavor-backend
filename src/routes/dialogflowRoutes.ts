@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import { dialogflowWebhook } from "../controllers/dfWebhookController";
+import { dialogflowWebhook, sendMessageToDialogflow } from "../controllers/dfWebhookController";
 
 const router = express.Router();
 
@@ -13,6 +13,6 @@ router.use(
 
 // Webhook route for Dialogflow
 router.post("/webhook", dialogflowWebhook);
-router.post("/chat", dialogflowWebhook)
+router.post("/chat", sendMessageToDialogflow);
 
 export default router;
