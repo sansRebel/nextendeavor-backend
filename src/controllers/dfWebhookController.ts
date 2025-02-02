@@ -1,13 +1,60 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { SessionsClient } from "@google-cloud/dialogflow";
+import dotenv from "dotenv";
+import path from "path";
 
+dotenv.config();
 const prisma = new PrismaClient();
+
+
+const sessionClient = new SessionsClient({
+  keyFilename: path.join(__dirname, "../config/formal-ember-449115-p8-afdd584d1a28.json"),
+});
+
+const projectId = require("../config/formal-ember-449115-p8-afdd584d1a28.json").project_id;
+
+export const sendMessageToDialogflow = async (req: Request, res: Response) => {
+  try {
+    const { message, sessionId } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: "Message is required." });
+    }
+
+    const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
+
+    const request = {
+      session: sessionPath,
+      queryInput: {
+        text: {
+          text: message,
+          languageCode: "en",
+        },
+      },
+    };
+
+    const responses = await sessionClient.detectIntent(request);
+    const result = responses[0].queryResult;
+
+    res.json({
+      response: result?.fulfillmentText,
+      parameters: result?.parameters?.fields || {},
+    });
+  } catch (error) {
+    console.error("Dialogflow Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
 
 
 const extractRelevantWords = (input: string): string[] => {
   const stopWords = [
     "i", "am", "i'm", "good", "at", "and", "with", "love", "in", "for", "the", "a"
   ];
+
+
+
 
   return input
     .toLowerCase() // Convert to lowercase
