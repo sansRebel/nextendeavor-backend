@@ -1,113 +1,52 @@
 import { Request, Response } from "express";
-import { PrismaClient } from "@prisma/client";
+import { SessionsClient } from "@google-cloud/dialogflow";
+import dotenv from "dotenv";
 
-const prisma = new PrismaClient();
+dotenv.config(); // Load environment variables
 
-
-const extractRelevantWords = (input: string): string[] => {
-  const stopWords = [
-    "i", "am", "i'm", "good", "at", "and", "with", "love", "in", "for", "the", "a"
-  ];
-
-  return input
-    .toLowerCase() // Convert to lowercase
-    .replace(/[^\w\s]/g, "") // Remove punctuation (e.g., periods, commas)
-    .split(/\s+/) // Split into words by whitespace
-    .filter((word) => !stopWords.includes(word)); // Remove stop words
-};
-
+// Initialize Dialogflow Client
+const sessionClient = new SessionsClient();
 
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
   console.log("🔹 Incoming Request Body:", JSON.stringify(req.body, null, 2));
 
-  if (!req.body || !req.body.queryResult) {
-    console.error("❌ Error: queryResult is missing in the request body");
+  if (!req.body || !req.body.message) {
+    console.error("❌ Error: Missing 'message' in request body");
+    res.status(400).json({ error: "Invalid request format. Missing 'message'." });
+    return;
   }
 
-  const intentName = req.body.queryResult.intent.displayName;
-  const parameters = req.body.queryResult.parameters || {};
+  const message = req.body.message;
+  const sessionId = req.body.sessionId || "default-session";
+  const projectId = process.env.DIALOGFLOW_PROJECT_ID || "formal-ember-449115-p8";
+  const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
-  console.log("✅ Intent Name:", intentName);
-  console.log("✅ Raw Parameters:", parameters);
+  const request = {
+    session: sessionPath,
+    queryInput: {
+      text: {
+        text: message,
+        languageCode: "en",
+      },
+    },
+  };
 
   try {
-    if (intentName === "Career Recommendation") {
-      const skills = extractRelevantWords(parameters.skills || "");
-      const interests = extractRelevantWords(parameters.interests || "");
+    const responses = await sessionClient.detectIntent(request);
+    const result = responses[0].queryResult;
 
-      console.log("Extracted Skills:", skills);
-      console.log("Extracted Interests:", interests);
+    console.log("✅ Dialogflow Response:", result);
 
-      // Fetch careers and calculate scores
-      const careers = await prisma.career.findMany();
-      const recommendations = careers
-        .map((career) => {
-          let skillScore = 0;
-          let interestScore = 0;
+    res.json({
+      fulfillmentText: result?.fulfillmentText || "No response from Dialogflow.",
+      parameters: result?.parameters || {},
+      intent: result?.intent?.displayName || "Unknown Intent",
+    });
 
-          // Match skills
-          if (career.requiredSkills) {
-            skillScore = career.requiredSkills.filter((skill) =>
-              skills.includes(skill.toLowerCase())
-            ).length;
-          }
-
-          // Match interests
-          if (interests) {
-            interestScore = interests.filter((interest) =>
-              career.description.toLowerCase().includes(interest.toLowerCase())
-            ).length;
-          }
-
-          const totalScore = skillScore + interestScore;
-
-          return {
-            id: career.id,
-            title: career.title,
-            description: career.description,
-            salaryRange: career.salaryRange,
-            demand: career.demand,
-            requiredSkills: career.requiredSkills,
-            totalScore,
-          };
-        })
-        .filter((career) => career.totalScore > 0) // Exclude careers with no matches
-        .sort((a, b) => b.totalScore - a.totalScore) // Sort by score
-        .slice(0, 3); // Limit to top 3
-
-      console.log("Recommendation response:", recommendations)
-
-      // Format the chatbot's response (simple success message)
-      res.json({
-        fulfillmentText: "Your career path is generated successfully. You can find it below.",
-        fulfillmentMessages: [
-          {
-            text: {
-              text: ["Your career path is generated successfully. You can find it below."],
-            },
-          },
-        ],
-        payload: {
-          recommendations, // Attach the detailed recommendations for the frontend
-        },
-      });
-      return;
-    }
-
-
-    // Default response for other intents
-    res.json({ fulfillmentText: "Sorry, I didn’t understand that request." });
     return;
   } catch (error) {
-    console.error("Dialogflow Webhook Error:", error);
-
-    res.status(500).send("Internal Server Error");
+    console.error("❌ Dialogflow API Error:", error);
+    res.status(500).json({ error: "Failed to connect to Dialogflow API" });
     return;
   }
 };
-
-
-
-
-
-
