@@ -18,11 +18,17 @@ const extractRelevantWords = (input: string): string[] => {
 
 
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
+  console.log("🔹 Incoming Request Body:", JSON.stringify(req.body, null, 2));
+
+  if (!req.body || !req.body.queryResult) {
+    console.error("❌ Error: queryResult is missing in the request body");
+  }
+
   const intentName = req.body.queryResult.intent.displayName;
   const parameters = req.body.queryResult.parameters || {};
 
-  console.log("Intent Name:", intentName);
-  console.log("Raw Parameters:", parameters);
+  console.log("✅ Intent Name:", intentName);
+  console.log("✅ Raw Parameters:", parameters);
 
   try {
     if (intentName === "Career Recommendation") {
