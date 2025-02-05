@@ -5,10 +5,12 @@ import fs from "fs";
 
 dotenv.config();
 
-// Debugging: Print the environment variable path
+// ✅ Force environment variable for credentials (to prevent Google from ignoring it)
+process.env.GOOGLE_APPLICATION_CREDENTIALS = "/etc/secrets/nextendeavor-chatbot-h9ng-4ea81aa5f9d3.json";
+
 console.log("✅ Using Service Account Path:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-// Ensure the file exists
+// ✅ Ensure the credentials file exists
 if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string)) {
   console.error("❌ ERROR: Service account JSON file NOT FOUND at", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 } else {
@@ -16,11 +18,15 @@ if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string)) {
   console.log("✅ Service Account Email:", serviceAccount.client_email);
 }
 
-// Initialize Dialogflow Client
-const sessionClient = new SessionsClient();
+// ✅ Explicitly provide the credentials to Dialogflow client
+const sessionClient = new SessionsClient({
+  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
+});
 
+// ✅ Function to handle Dialogflow webhook
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
   try {
+    // ✅ Verify request format
     if (!req.body.message) {
       console.error("❌ Error: Missing 'message' in request body");
       res.status(400).json({ error: "Invalid request format. Missing 'message'." });
@@ -34,6 +40,11 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
 
     console.log("📢 Sending request to Dialogflow with Project ID:", projectId);
 
+    // ✅ Debug: Print OAuth Token to check authentication
+    const auth = await sessionClient.auth.getClient();
+    const token = await auth.getAccessToken();
+    console.log("✅ Generated OAuth Token:", token);
+
     const request = {
       session: sessionPath,
       queryInput: {
@@ -44,13 +55,23 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       },
     };
 
+    // ✅ Make request to Dialogflow
     const responses = await sessionClient.detectIntent(request);
-    console.log("✅ Dialogflow Response:", responses[0]?.queryResult);
+    const queryResult = responses[0]?.queryResult;
 
+    if (!queryResult) {
+      console.error("❌ Error: Missing queryResult in Dialogflow response.");
+      res.status(500).json({ error: "Dialogflow did not return a valid response." });
+      return;
+    }
+
+    console.log("✅ Dialogflow Response:", queryResult);
+
+    // ✅ Send response back to frontend
     res.json({
-      fulfillmentText: responses[0]?.queryResult?.fulfillmentText || "No response from Dialogflow.",
-      parameters: responses[0]?.queryResult?.parameters || {},
-      intent: responses[0]?.queryResult?.intent?.displayName || "Unknown Intent",
+      fulfillmentText: queryResult.fulfillmentText || "No response from Dialogflow.",
+      parameters: queryResult.parameters || {},
+      intent: queryResult.intent?.displayName || "Unknown Intent",
     });
   } catch (error) {
     console.error("❌ Dialogflow API Error:", error);
