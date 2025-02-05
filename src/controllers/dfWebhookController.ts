@@ -1,8 +1,20 @@
 import { Request, Response } from "express";
 import { SessionsClient } from "@google-cloud/dialogflow";
 import dotenv from "dotenv";
+import fs from "fs";
 
 dotenv.config();
+
+// Debugging: Print the environment variable path
+console.log("✅ Using Service Account Path:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
+
+// Ensure the file exists
+if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string)) {
+  console.error("❌ ERROR: Service account JSON file NOT FOUND at", process.env.GOOGLE_APPLICATION_CREDENTIALS);
+} else {
+  const serviceAccount = JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string, "utf8"));
+  console.log("✅ Service Account Email:", serviceAccount.client_email);
+}
 
 // Initialize Dialogflow Client
 const sessionClient = new SessionsClient();
@@ -33,20 +45,12 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     };
 
     const responses = await sessionClient.detectIntent(request);
-    const queryResult = responses[0]?.queryResult;
-
-    if (!queryResult) {
-      console.error("❌ Error: Missing queryResult in Dialogflow response.");
-      res.status(500).json({ error: "Dialogflow did not return a valid response." });
-      return;
-    }
-
-    console.log("✅ Dialogflow Response:", queryResult);
+    console.log("✅ Dialogflow Response:", responses[0]?.queryResult);
 
     res.json({
-      fulfillmentText: queryResult.fulfillmentText || "No response from Dialogflow.",
-      parameters: queryResult.parameters || {},
-      intent: queryResult.intent?.displayName || "Unknown Intent",
+      fulfillmentText: responses[0]?.queryResult?.fulfillmentText || "No response from Dialogflow.",
+      parameters: responses[0]?.queryResult?.parameters || {},
+      intent: responses[0]?.queryResult?.intent?.displayName || "Unknown Intent",
     });
   } catch (error) {
     console.error("❌ Dialogflow API Error:", error);
