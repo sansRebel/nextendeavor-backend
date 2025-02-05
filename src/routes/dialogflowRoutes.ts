@@ -1,5 +1,5 @@
 import express from "express";
-import { dialogflowWebhook,  } from "../controllers/dfWebhookController";
+import { dialogflowWebhook  } from "../controllers/dfWebhookController";
 
 const router = express.Router();
 
