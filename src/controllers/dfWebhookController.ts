@@ -70,11 +70,14 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     // ✅ Send response back to frontend
     res.json({
       fulfillmentText: queryResult.fulfillmentText || "No response from Dialogflow.",
-      parameters: queryResult.parameters || {},
-      intent: queryResult.intent?.displayName || "Unknown Intent",
+      parameters: queryResult.parameters || {}, // Keep parameters if needed
+      intent: queryResult.intent?.displayName || "", // Send the intent name separately if required
     });
+    
   } catch (error) {
     console.error("❌ Dialogflow API Error:", error);
     res.status(500).json({ error: "Failed to connect to Dialogflow API" });
   }
 };
+
+
