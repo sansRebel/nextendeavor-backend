@@ -2,13 +2,13 @@ import { Request, Response } from "express";
 import { SessionsClient } from "@google-cloud/dialogflow";
 import dotenv from "dotenv";
 
-dotenv.config(); // Load environment variables
+dotenv.config();
 
 // Initialize Dialogflow Client
-const sessionClient = new SessionsClient();
+const sessionClient = new SessionsClient(); // No need to manually pass credentials
 
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
-  console.log("🔹 Incoming Request Body:", JSON.stringify(req.body, null, 2));
+  console.log("✅ Using Service Account:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
   if (!req.body || !req.body.message) {
     console.error("❌ Error: Missing 'message' in request body");
@@ -18,7 +18,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
 
   const message = req.body.message;
   const sessionId = req.body.sessionId || "default-session";
-  const projectId = process.env.DIALOGFLOW_PROJECT_ID || "formal-ember-449115-p8";
+  const projectId = process.env.DIALOGFLOW_PROJECT_ID || "nextendeavor-chatbot-h9ng";
   const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
   const request = {
