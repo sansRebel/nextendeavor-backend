@@ -31,14 +31,14 @@ model Recommendation {
 }
 
 model Career {
-  id            String           @id @default(auto()) @map("_id") @db.ObjectId
-  title         String
-  description   String
-  requiredSkills String[]
-  salaryRange   String       
-  industry      String?   
-  demand        Int?
-  growthPotential Int?   
-  recommendations Recommendation[] 
+  id              String   @id @default(auto()) @map("_id") @db.ObjectId
+  title           String
+  description     String
+  requiredSkills  String[]
+  salaryRange     String
+  industry        String?  // Ensure this field exists
+  demand         Int?
+  growthPotential Int? // Ensure this field exists
+  recommendations Recommendation[]
 }
 
