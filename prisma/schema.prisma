@@ -35,7 +35,10 @@ model Career {
   title         String
   description   String
   requiredSkills String[]
-  salaryRange   String
-  demand        Int
-  recommendations Recommendation[] // Relation to Recommendation
+  salaryRange   String       
+  industry      String?   
+  demand        Int?
+  growthPotential Int?   
+  recommendations Recommendation[] 
 }
+

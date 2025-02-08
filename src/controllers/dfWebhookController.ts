@@ -4,9 +4,7 @@ import dotenv from "dotenv";
 import fs from "fs";
 import { PrismaClient } from "@prisma/client";
 
-
 const prisma = new PrismaClient();
-
 dotenv.config();
 
 // ✅ Force environment variable for credentials
@@ -70,7 +68,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     const parameters = queryResult.parameters?.fields || {}; // Extract parameters
 
     let responseMessage = queryResult.fulfillmentText || "No response from Dialogflow.";
-    let recommendations = [];
+    let recommendations: { id: string; title: string; description: string; requiredSkills: string[]; industry: string | null; demand: number | null; growthPotential: number | null; salaryMin: number | null; salaryMax: number | null; totalScore: number; }[] = [];
 
     // ✅ Check if the Career Recommendation Intent has all required parameters
     if (intentName === "Career Recommendation") {
@@ -78,8 +76,8 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       const interests = parameters.interests?.stringValue || "";
 
       if (skills && interests) {
-        console.log("✅ Extracted Skills:", skills);
-        console.log("✅ Extracted Interests:", interests);
+        console.log(" Extracted Skills:", skills);
+        console.log(" Extracted Interests:", interests);
 
         // ✅ Fetch and generate recommendations
         recommendations = await generateCareerRecommendations(skills, interests);
@@ -89,11 +87,10 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       }
     }
 
-    // ✅ Send response back to frontend
     res.json({
       fulfillmentText: responseMessage,
       intent: intentName,
-      recommendations, // Attach recommendations, but frontend will display them in a separate component
+      recommendations,
     });
 
   } catch (error) {
@@ -105,17 +102,28 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
 // ✅ Function to generate career recommendations
 const generateCareerRecommendations = async (skills: string, interests: string) => {
   try {
-    // ✅ Fetch careers from database
-    const careers = await prisma.career.findMany();
+    // ✅ Fetch careers from the database and explicitly select required fields
+    const careers = await prisma.career.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+        requiredSkills: true,
+        salaryRange: true,
+        industry: true,
+        demand: true,
+        growthPotential: true,
+      },
+    });
 
     // ✅ Calculate matching scores
-    const scoredCareers = careers.map((career: any) => {
+    const scoredCareers = careers.map((career) => {
       let skillScore = 0;
       let interestScore = 0;
 
       // ✅ Match skills
       if (career.requiredSkills) {
-        skillScore = career.requiredSkills.filter((skill: any) =>
+        skillScore = career.requiredSkills.filter((skill) =>
           skills.toLowerCase().includes(skill.toLowerCase())
         ).length;
       }
@@ -125,13 +133,27 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         interestScore += 1;
       }
 
-      return { ...career, totalScore: skillScore + interestScore };
+      // ✅ Extract salaryMin and salaryMax from salaryRange
+      const salaryMatch = career.salaryRange.match(/\$([\d,]+) - \$([\d,]+)/);
+      const salaryMin = salaryMatch ? parseInt(salaryMatch[1].replace(/,/g, ""), 10) : null;
+      const salaryMax = salaryMatch ? parseInt(salaryMatch[2].replace(/,/g, ""), 10) : null;
+
+      return {
+        id: career.id,
+        title: career.title,
+        description: career.description,
+        requiredSkills: career.requiredSkills,
+        industry: career.industry,
+        demand: career.demand,
+        growthPotential: career.growthPotential,
+        salaryMin,
+        salaryMax,
+        totalScore: skillScore + interestScore,
+      };
     });
 
     // ✅ Sort and return top 3 recommendations
-    return scoredCareers
-      .sort((a: any, b: any) => b.totalScore - a.totalScore)
-      .slice(0, 3);
+    return scoredCareers.sort((a, b) => b.totalScore - a.totalScore).slice(0, 3);
   } catch (error) {
     console.error("❌ Error generating recommendations:", error);
     return [];
