@@ -106,6 +106,7 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         growthPotential: true,
       },
     });
+    console.log("🛠 Careers Fetched from Database:", careers);
 
     // ✅ Calculate matching scores
     const scoredCareers = careers.map((career) => {
