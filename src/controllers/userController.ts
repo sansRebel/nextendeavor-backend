@@ -4,7 +4,12 @@ import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
 
-export const editAccount = async (req: Request, res: Response): Promise<void> => {
+// ✅ Extend Express Request to include userId
+interface AuthenticatedRequest extends Request {
+  userId?: string;
+}
+
+export const editAccount = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
   const userId = req.userId; // Extracted by the middleware
 
   if (!userId) {
@@ -48,28 +53,23 @@ export const editAccount = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-  
-  
+export const deleteAccount = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
+  const userId = req.userId; // Extracted from the middleware
 
-  export const deleteAccount = async (req: Request, res: Response): Promise<void> => {
-    const userId = req.userId; // Extracted from the middleware
-  
-    try {
-      // Verify if the user exists
-      const user = await prisma.user.findUnique({ where: { id: userId } });
-      if (!user) {
-        res.status(404).json({ error: "User not found" });
-        return;
-      }
-  
-      // Delete the user
-      await prisma.user.delete({ where: { id: userId } });
-  
-      res.status(200).json({ message: "Account deleted successfully" });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: "Internal Server Error" });
+  try {
+    // Verify if the user exists
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
     }
-  };
-  
 
+    // Delete the user
+    await prisma.user.delete({ where: { id: userId } });
+
+    res.status(200).json({ message: "Account deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};

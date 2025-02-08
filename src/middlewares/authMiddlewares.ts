@@ -3,12 +3,17 @@ import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET || "NightIsAlwaysBetter101";
 
+// ✅ Extend Express Request to include userId
+interface AuthenticatedRequest extends Request {
+  userId?: string;
+}
+
 interface JwtPayload {
   userID: string;
 }
 
 export const authenticateUser = (
-  req: Request,
+  req: AuthenticatedRequest, // ✅ Use the extended interface here
   res: Response,
   next: NextFunction
 ): void => {
@@ -28,7 +33,7 @@ export const authenticateUser = (
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
     console.log("Decoded Token Payload:", decoded); // Debugging
 
-    req.userId = decoded.userID; // Attach userId to the request
+    req.userId = decoded.userID; // ✅ Attach userId to the extended request
     console.log("Attached userId to req:", req.userId); // Debugging
 
     next();

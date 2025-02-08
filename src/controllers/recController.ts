@@ -1,30 +1,15 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
-import { generateCareerRecommendations } from "../utils/recommendationUtils";
 
 const prisma = new PrismaClient();
 
+interface AuthenticatedRequest extends Request {
+    userId?: string;
+  }
+  
 
-export const generateRecommendations = async (req: Request, res: Response): Promise<void> => {
-  const { skills, interests } = req.body; // Extract user inputs
 
-    if (!skills || !Array.isArray(skills)) {
-        res.status(400).json({ error: "Skills must be an array of strings." });
-        return;
-    }
-
-    try {
-        // ✅ Call the shared recommendation function
-        const recommendations = await generateCareerRecommendations(skills, interests || []);
-
-        res.status(200).json({ recommendations });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Failed to generate recommendations" });
-    }
-};
-
-export const saveRecommendation = async(req: Request, res: Response): Promise<void> =>{
+export const saveRecommendation = async(req: AuthenticatedRequest, res: Response): Promise<void> =>{
     const userId = req.userId;
     const {careerId} = req.body;
     console.log(careerId);
@@ -78,7 +63,7 @@ export const saveRecommendation = async(req: Request, res: Response): Promise<vo
 };
 
 
-export const getSavedRecommendations = async(req: Request, res: Response): Promise<void> =>{
+export const getSavedRecommendations = async(req: AuthenticatedRequest, res: Response): Promise<void> =>{
     const userId = req.userId;
     if (!userId) {
         res.status(401).json({ error: "Unauthorized" });
@@ -121,7 +106,7 @@ export const getSavedRecommendations = async(req: Request, res: Response): Promi
         }
 };
 
-export const clearRecommendations = async (req: Request, res: Response): Promise<void> => {
+export const clearRecommendations = async (req: AuthenticatedRequest, res: Response): Promise<void> => {
     const userId = req.userId; // Extract userId from JWT middleware
 
     if (!userId) {

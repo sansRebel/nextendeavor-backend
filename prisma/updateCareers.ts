@@ -10,12 +10,6 @@ async function updateCareers() {
   for (const career of careers) {
     let updateData: any = {};
 
-    // ✅ Extract salary min and max if missing
-    if (career.salaryMin === null || career.salaryMax === null) {
-      const salaryMinMax = extractSalaryRange(career.salaryRange);
-      if (salaryMinMax.min > 0) updateData.salaryMin = salaryMinMax.min;
-      if (salaryMinMax.max > 0) updateData.salaryMax = salaryMinMax.max;
-    }
 
     // ✅ Ensure the industry is set
     if (!career.industry) {
@@ -27,18 +21,7 @@ async function updateCareers() {
       updateData.growthPotential = getRandomValue(5, 10); // Growth potential (scale 5-10)
     }
 
-    if (career.jobAvailability === null) {
-      updateData.jobAvailability = getRandomValue(1, 100); // Number of job openings
-    }
 
-    // ✅ Set default skillMatchScore & interestMatchScore if missing
-    if (career.skillMatchScore === null) {
-      updateData.skillMatchScore = getRandomValue(1, 10);
-    }
-
-    if (career.interestMatchScore === null) {
-      updateData.interestMatchScore = getRandomValue(1, 10);
-    }
 
     // ✅ Only update if there are changes
     if (Object.keys(updateData).length > 0) {
