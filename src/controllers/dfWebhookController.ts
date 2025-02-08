@@ -7,12 +7,10 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 dotenv.config();
 
-// ✅ Force environment variable for credentials
 process.env.GOOGLE_APPLICATION_CREDENTIALS = "/etc/secrets/nextendeavor-chatbot-h9ng-4ea81aa5f9d3.json";
 
 console.log("✅ Using Service Account Path:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-// ✅ Ensure the credentials file exists
 if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string)) {
   console.error("❌ ERROR: Service account JSON file NOT FOUND at", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 } else {
@@ -20,12 +18,10 @@ if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string)) {
   console.log("✅ Service Account Email:", serviceAccount.client_email);
 }
 
-// ✅ Initialize Dialogflow Client
 const sessionClient = new SessionsClient({
   keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
 });
 
-// ✅ Function to handle Dialogflow webhook
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
   try {
     // ✅ Validate request format
@@ -40,7 +36,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     const projectId = process.env.DIALOGFLOW_PROJECT_ID || "nextendeavor-chatbot-h9ng";
     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
-    console.log("📢 Sending request to Dialogflow with Project ID:", projectId);
+    console.log(" Sending request to Dialogflow with Project ID:", projectId);
 
     const request = {
       session: sessionPath,
@@ -52,17 +48,16 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       },
     };
 
-    // ✅ Make request to Dialogflow
     const responses = await sessionClient.detectIntent(request);
     const queryResult = responses[0]?.queryResult;
 
     if (!queryResult) {
-      console.error("❌ Error: Missing queryResult in Dialogflow response.");
+      console.error(" Error: Missing queryResult in Dialogflow response.");
       res.status(500).json({ error: "Dialogflow did not return a valid response." });
       return;
     }
 
-    console.log("✅ Dialogflow Response:", queryResult);
+    console.log(" Dialogflow Response:", queryResult);
 
     const intentName = queryResult.intent?.displayName || "";
     const parameters = queryResult.parameters?.fields || {}; // Extract parameters
@@ -70,7 +65,6 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     let responseMessage = queryResult.fulfillmentText || "No response from Dialogflow.";
     let recommendations: { id: string; title: string; description: string; requiredSkills: string[]; industry: string | null; demand: number | null; growthPotential: number | null; salaryMin: number | null; salaryMax: number | null; totalScore: number; }[] = [];
 
-    // ✅ Check if the Career Recommendation Intent has all required parameters
     if (intentName === "Career Recommendation") {
       const skills = parameters.skills?.stringValue || "";
       const interests = parameters.interests?.stringValue || "";
@@ -79,7 +73,6 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
         console.log(" Extracted Skills:", skills);
         console.log(" Extracted Interests:", interests);
 
-        // ✅ Fetch and generate recommendations
         recommendations = await generateCareerRecommendations(skills, interests);
 
         console.log("✅ Generated Career Recommendations:", recommendations);
@@ -94,15 +87,13 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     });
 
   } catch (error) {
-    console.error("❌ Dialogflow API Error:", error);
+    console.error(" Dialogflow API Error:", error);
     res.status(500).json({ error: "Failed to connect to Dialogflow API" });
   }
 };
 
-// ✅ Function to generate career recommendations
 const generateCareerRecommendations = async (skills: string, interests: string) => {
   try {
-    // ✅ Fetch careers from the database and explicitly select required fields
     const careers = await prisma.career.findMany({
       select: {
         id: true,
