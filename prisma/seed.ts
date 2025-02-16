@@ -1,641 +1,177 @@
-// import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new PrismaClient();
+const prisma = new PrismaClient();
 
-// async function main() {
-//     const careers = [
-//         {
-//             title: "Lawyer",
-//             description: "Provide legal advice and represent clients in court.",
-//             requiredSkills: ["Legal Knowledge", "Research", "Negotiation"],
-//             salaryRange: "$80,000 - $200,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Surgeon",
-//             description: "Perform surgeries to treat injuries, diseases, or deformities.",
-//             requiredSkills: ["Surgery", "Precision", "Patience"],
-//             salaryRange: "$150,000 - $400,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Architect",
-//             description: "Design and oversee construction of buildings and structures.",
-//             requiredSkills: ["Design", "Planning", "Creativity"],
-//             salaryRange: "$70,000 - $120,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Accountant",
-//             description: "Manage financial records and prepare tax filings.",
-//             requiredSkills: ["Accounting", "Mathematics", "Organization"],
-//             salaryRange: "$50,000 - $100,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Psychologist",
-//             description: "Help patients manage mental health and emotional issues.",
-//             requiredSkills: ["Counseling", "Communication", "Empathy"],
-//             salaryRange: "$60,000 - $120,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Pharmacist",
-//             description: "Prepare and dispense medications to patients.",
-//             requiredSkills: ["Pharmacology", "Attention to Detail", "Communication"],
-//             salaryRange: "$90,000 - $140,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Judge",
-//             description: "Preside over legal cases and interpret laws in court.",
-//             requiredSkills: ["Legal Knowledge", "Decision-Making", "Fairness"],
-//             salaryRange: "$100,000 - $200,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Civil Engineer",
-//             description: "Design and supervise construction of infrastructure projects.",
-//             requiredSkills: ["Engineering", "AutoCAD", "Planning"],
-//             salaryRange: "$70,000 - $130,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Dentist",
-//             description: "Provide oral healthcare and perform dental procedures.",
-//             requiredSkills: ["Dentistry", "Precision", "Communication"],
-//             salaryRange: "$100,000 - $200,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Veterinarian",
-//             description: "Provide medical care for animals and pets.",
-//             requiredSkills: ["Animal Care", "Medical Knowledge", "Patience"],
-//             salaryRange: "$70,000 - $130,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Economist",
-//             description: "Analyze economic trends and provide financial advice.",
-//             requiredSkills: ["Research", "Statistics", "Analysis"],
-//             salaryRange: "$80,000 - $150,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Software Architect",
-//             description: "Design high-level solutions and software systems.",
-//             requiredSkills: ["Programming", "Design", "Leadership"],
-//             salaryRange: "$120,000 - $200,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Biomedical Engineer",
-//             description: "Develop medical devices and healthcare technologies.",
-//             requiredSkills: ["Engineering", "Biology", "Problem-Solving"],
-//             salaryRange: "$80,000 - $140,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Management Consultant",
-//             description: "Advise organizations on improving business efficiency.",
-//             requiredSkills: ["Problem-Solving", "Communication", "Strategy"],
-//             salaryRange: "$100,000 - $200,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Airline Pilot",
-//             description: "Fly and navigate airplanes for passenger or cargo transport.",
-//             requiredSkills: ["Flying", "Navigation", "Safety"],
-//             salaryRange: "$120,000 - $250,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Geologist",
-//             description: "Study the Earth’s materials and processes for exploration.",
-//             requiredSkills: ["Geology", "Research", "Data Analysis"],
-//             salaryRange: "$70,000 - $120,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Environmental Scientist",
-//             description: "Study and manage environmental issues like pollution and conservation.",
-//             requiredSkills: ["Research", "Analysis", "Problem-Solving"],
-//             salaryRange: "$60,000 - $110,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Astronomer",
-//             description: "Study celestial objects and phenomena in space.",
-//             requiredSkills: ["Physics", "Mathematics", "Research"],
-//             salaryRange: "$90,000 - $160,000",
-//             demand: 6,
-//           },
-//           {
-//             title: "Petroleum Engineer",
-//             description: "Design and develop methods for extracting oil and gas.",
-//             requiredSkills: ["Engineering", "Problem-Solving", "Mathematics"],
-//             salaryRange: "$110,000 - $180,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Corporate Lawyer",
-//             description: "Handle legal matters for businesses and corporations.",
-//             requiredSkills: ["Corporate Law", "Negotiation", "Legal Writing"],
-//             salaryRange: "$120,000 - $250,000",
-//             demand: 7,
-//           },
+const careers = [
+  // 🏥 Healthcare & Medicine
+  {
+    title: "Cardiologist",
+    description: "Diagnoses and treats heart-related diseases.",
+    longDescription: "A cardiologist specializes in diagnosing and treating conditions of the cardiovascular system...",
+    requiredSkills: ["Medical Knowledge", "Patient Care", "Cardiology"],
+    salaryRange: "$200,000 - $400,000",
+    industry: "Healthcare & Medicine",
+    demand: 9,
+    growthPotential: 8,
+  },
+  {
+    title: "Physical Therapist",
+    description: "Helps patients recover from injuries and improve mobility.",
+    longDescription: "Physical therapists work with patients to restore mobility, relieve pain, and prevent disabilities...",
+    requiredSkills: ["Physiotherapy", "Patient Care", "Communication"],
+    salaryRange: "$60,000 - $120,000",
+    industry: "Healthcare & Medicine",
+    demand: 8,
+    growthPotential: 7,
+  },
 
-//         {
-//             title: "Teacher",
-//             description: "Educate students and help them develop skills for the future.",
-//             requiredSkills: ["Teaching", "Communication", "Planning"],
-//             salaryRange: "$40,000 - $70,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Nurse",
-//             description: "Provide medical care and support to patients in various settings.",
-//             requiredSkills: ["Nursing", "Patient Care", "Teamwork"],
-//             salaryRange: "$50,000 - $90,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Chef",
-//             description: "Prepare and cook meals in restaurants or hotels.",
-//             requiredSkills: ["Cooking", "Creativity", "Time Management"],
-//             salaryRange: "$30,000 - $60,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Driver",
-//             description: "Transport goods or passengers safely and efficiently.",
-//             requiredSkills: ["Driving", "Navigation", "Time Management"],
-//             salaryRange: "$20,000 - $50,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Artist",
-//             description: "Create artworks like paintings, sculptures, or digital designs.",
-//             requiredSkills: ["Drawing", "Creativity", "Design"],
-//             salaryRange: "$25,000 - $60,000",
-//             demand: 6,
-//           },
-//           {
-//             title: "Farmer",
-//             description: "Grow crops or raise livestock for food and agricultural purposes.",
-//             requiredSkills: ["Farming", "Machinery", "Planning"],
-//             salaryRange: "$25,000 - $50,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Mechanic",
-//             description: "Repair and maintain vehicles or machinery.",
-//             requiredSkills: ["Repairing", "Problem-Solving", "Driving"],
-//             salaryRange: "$30,000 - $55,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Photographer",
-//             description: "Capture and edit photos for various purposes like events or advertising.",
-//             requiredSkills: ["Photography", "Editing", "Creativity"],
-//             salaryRange: "$20,000 - $50,000",
-//             demand: 6,
-//           },
-//           {
-//             title: "Salesperson",
-//             description: "Sell products or services and assist customers with their needs.",
-//             requiredSkills: ["Sales", "Customer Service", "Communication"],
-//             salaryRange: "$25,000 - $50,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Construction Worker",
-//             description: "Build and repair structures like houses, roads, or bridges.",
-//             requiredSkills: ["Construction", "Teamwork", "Safety"],
-//             salaryRange: "$20,000 - $45,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Fitness Trainer",
-//             description: "Help clients achieve their fitness goals through training and guidance.",
-//             requiredSkills: ["Fitness", "Motivation", "Teaching"],
-//             salaryRange: "$30,000 - $60,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Translator",
-//             description: "Translate written or spoken content from one language to another.",
-//             requiredSkills: ["Language", "Writing", "Speaking"],
-//             salaryRange: "$35,000 - $70,000",
-//             demand: 6,
-//           },
-//           {
-//             title: "Event Planner",
-//             description: "Organize and coordinate events like weddings, conferences, and parties.",
-//             requiredSkills: ["Planning", "Organization", "Communication"],
-//             salaryRange: "$40,000 - $70,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Police Officer",
-//             description: "Protect the public and maintain law and order.",
-//             requiredSkills: ["Safety", "Driving", "Problem-Solving"],
-//             salaryRange: "$40,000 - $70,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Hairdresser",
-//             description: "Style and cut hair for clients in salons or barbershops.",
-//             requiredSkills: ["Hairdressing", "Customer Service", "Creativity"],
-//             salaryRange: "$25,000 - $50,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Interior Designer",
-//             description: "Plan and design indoor spaces to make them functional and beautiful.",
-//             requiredSkills: ["Design", "Creativity", "Planning"],
-//             salaryRange: "$40,000 - $80,000",
-//             demand: 6,
-//           },
-//           {
-//             title: "Delivery Driver",
-//             description: "Deliver goods and packages to customers on time.",
-//             requiredSkills: ["Driving", "Navigation", "Time Management"],
-//             salaryRange: "$25,000 - $50,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Customer Service Representative",
-//             description: "Assist customers with questions, complaints, and product support.",
-//             requiredSkills: ["Customer Service", "Communication", "Problem-Solving"],
-//             salaryRange: "$25,000 - $45,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Tour Guide",
-//             description: "Lead tours and provide information about attractions or locations.",
-//             requiredSkills: ["Speaking", "Knowledge", "Communication"],
-//             salaryRange: "$25,000 - $45,000",
-//             demand: 6,
-//           },
-//           {
-//             title: "Retail Worker",
-//             description: "Assist customers in retail stores with purchases and inquiries.",
-//             requiredSkills: ["Customer Service", "Sales", "Organization"],
-//             salaryRange: "$20,000 - $40,000",
-//             demand: 8,
-//           },
+  // 📊 Business & Finance
+  {
+    title: "Investment Banker",
+    description: "Manages financial assets and advises clients on investment opportunities.",
+    longDescription: "Investment bankers work with corporations, governments, and investors to manage capital and financial strategies...",
+    requiredSkills: ["Financial Analysis", "Risk Assessment", "Negotiation"],
+    salaryRange: "$100,000 - $300,000",
+    industry: "Business & Finance",
+    demand: 8,
+    growthPotential: 9,
+  },
+  {
+    title: "Supply Chain Manager",
+    description: "Oversees procurement, production, and distribution processes.",
+    longDescription: "A supply chain manager ensures efficient and cost-effective procurement, production, and delivery of goods...",
+    requiredSkills: ["Logistics", "Project Management", "Data Analysis"],
+    salaryRange: "$80,000 - $150,000",
+    industry: "Business & Finance",
+    demand: 7,
+    growthPotential: 7,
+  },
 
-//         {
-//           title: "Taxi Driver",
-//           description: "Drive passengers to their destinations safely and on time.",
-//           requiredSkills: ["Driving", "Navigation", "Customer Service"],
-//           salaryRange: "$20,000 - $40,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Receptionist",
-//           description: "Manage front desk operations and assist visitors and staff.",
-//           requiredSkills: ["Communication", "Organization", "Customer Service"],
-//           salaryRange: "$25,000 - $45,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Waiter",
-//           description: "Serve food and beverages in restaurants and cafes.",
-//           requiredSkills: ["Customer Service", "Teamwork", "Communication"],
-//           salaryRange: "$20,000 - $35,000",
-//           demand: 9,
-//         },
-//         {
-//           title: "Electrician",
-//           description: "Install and maintain electrical systems in homes and businesses.",
-//           requiredSkills: ["Electrical Work", "Safety", "Problem-Solving"],
-//           salaryRange: "$35,000 - $60,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Plumber",
-//           description: "Install and repair water and drainage systems.",
-//           requiredSkills: ["Plumbing", "Problem-Solving", "Safety"],
-//           salaryRange: "$35,000 - $55,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Veterinarian",
-//           description: "Provide medical care to animals and pets.",
-//           requiredSkills: ["Animal Care", "Medical Knowledge", "Patience"],
-//           salaryRange: "$60,000 - $100,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Carpenter",
-//           description: "Build and repair wooden structures and furniture.",
-//           requiredSkills: ["Carpentry", "Design", "Safety"],
-//           salaryRange: "$30,000 - $50,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Painter",
-//           description: "Paint buildings, walls, or art pieces for aesthetics and protection.",
-//           requiredSkills: ["Painting", "Design", "Creativity"],
-//           salaryRange: "$20,000 - $40,000",
-//           demand: 6,
-//         },
-//         {
-//           title: "Barista",
-//           description: "Prepare and serve coffee and other beverages in cafes.",
-//           requiredSkills: ["Coffee Making", "Customer Service", "Time Management"],
-//           salaryRange: "$20,000 - $35,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Bartender",
-//           description: "Mix and serve drinks to customers at bars or restaurants.",
-//           requiredSkills: ["Mixology", "Customer Service", "Communication"],
-//           salaryRange: "$25,000 - $50,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Gardener",
-//           description: "Maintain gardens, plants, and landscapes.",
-//           requiredSkills: ["Gardening", "Planning", "Maintenance"],
-//           salaryRange: "$20,000 - $40,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Librarian",
-//           description: "Organize and manage library resources and assist visitors.",
-//           requiredSkills: ["Organization", "Research", "Communication"],
-//           salaryRange: "$35,000 - $60,000",
-//           demand: 6,
-//         },
-//         {
-//           title: "Social Worker",
-//           description: "Support individuals and communities to improve their lives.",
-//           requiredSkills: ["Empathy", "Communication", "Problem-Solving"],
-//           salaryRange: "$40,000 - $70,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Baker",
-//           description: "Prepare and bake bread, cakes, and pastries.",
-//           requiredSkills: ["Baking", "Creativity", "Time Management"],
-//           salaryRange: "$25,000 - $50,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Beautician",
-//           description: "Provide beauty treatments such as facials and makeup.",
-//           requiredSkills: ["Makeup", "Customer Service", "Creativity"],
-//           salaryRange: "$25,000 - $45,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Pilot",
-//           description: "Operate and navigate airplanes to transport passengers or cargo.",
-//           requiredSkills: ["Flying", "Navigation", "Safety"],
-//           salaryRange: "$80,000 - $150,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Flight Attendant",
-//           description: "Ensure passenger safety and comfort during flights.",
-//           requiredSkills: ["Customer Service", "Safety", "Communication"],
-//           salaryRange: "$30,000 - $60,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Travel Agent",
-//           description: "Plan and book travel arrangements for clients.",
-//           requiredSkills: ["Planning", "Sales", "Communication"],
-//           salaryRange: "$30,000 - $55,000",
-//           demand: 6,
-//         },
-//         {
-//           title: "Zookeeper",
-//           description: "Care for and maintain animals in a zoo or sanctuary.",
-//           requiredSkills: ["Animal Care", "Patience", "Maintenance"],
-//           salaryRange: "$30,000 - $50,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Warehouse Worker",
-//           description: "Organize, load, and unload goods in warehouses.",
-//           requiredSkills: ["Organization", "Lifting", "Teamwork"],
-//           salaryRange: "$25,000 - $45,000",
-//           demand: 9,
-//         },
-//         {
-//           title: "Housekeeper",
-//           description: "Maintain cleanliness and order in residential or commercial spaces.",
-//           requiredSkills: ["Cleaning", "Organization", "Time Management"],
-//           salaryRange: "$20,000 - $35,000",
-//           demand: 8,
-//         },
-//         {
-//           title: "Real Estate Agent",
-//           description: "Help clients buy, sell, or rent properties.",
-//           requiredSkills: ["Sales", "Communication", "Negotiation"],
-//           salaryRange: "$50,000 - $100,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Journalist",
-//           description: "Research and report news stories for media outlets.",
-//           requiredSkills: ["Writing", "Research", "Communication"],
-//           salaryRange: "$40,000 - $80,000",
-//           demand: 7,
-//         },
-//         {
-//           title: "Legal Assistant",
-//           description: "Support lawyers by managing legal documents and communication.",
-//           requiredSkills: ["Organization", "Legal Knowledge", "Communication"],
-//           salaryRange: "$35,000 - $55,000",
-//           demand: 7,
-//         },
-//         {
-//             title: "Web Developer",
-//             description: "Build and maintain websites and web applications.",
-//             requiredSkills: ["HTML", "CSS", "JavaScript"],
-//             salaryRange: "$50,000 - $90,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Software Developer",
-//             description: "Design and create software for various platforms.",
-//             requiredSkills: ["Programming", "Problem-Solving", "Debugging"],
-//             salaryRange: "$70,000 - $120,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "IT Support Specialist",
-//             description: "Provide technical support and troubleshoot IT issues.",
-//             requiredSkills: ["Troubleshooting", "Hardware", "Communication"],
-//             salaryRange: "$40,000 - $70,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Database Administrator",
-//             description: "Manage and optimize databases for storing information.",
-//             requiredSkills: ["SQL", "Organization", "Analysis"],
-//             salaryRange: "$60,000 - $100,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "UI/UX Designer",
-//             description: "Design user interfaces and improve user experience.",
-//             requiredSkills: ["Design", "Creativity", "Prototyping"],
-//             salaryRange: "$50,000 - $90,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "System Administrator",
-//             description: "Manage and maintain IT infrastructure and networks.",
-//             requiredSkills: ["Networking", "Linux", "Troubleshooting"],
-//             salaryRange: "$60,000 - $100,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Mobile App Developer",
-//             description: "Create and maintain apps for Android and iOS platforms.",
-//             requiredSkills: ["Java", "Swift", "Design"],
-//             salaryRange: "$70,000 - $120,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Cybersecurity Specialist",
-//             description: "Protect systems and data from security threats.",
-//             requiredSkills: ["Security", "Problem-Solving", "Analysis"],
-//             salaryRange: "$80,000 - $140,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "DevOps Engineer",
-//             description: "Automate and manage software development pipelines.",
-//             requiredSkills: ["Automation", "Docker", "Kubernetes"],
-//             salaryRange: "$90,000 - $150,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Cloud Engineer",
-//             description: "Build and maintain cloud-based solutions and systems.",
-//             requiredSkills: ["Cloud", "AWS", "Networking"],
-//             salaryRange: "$100,000 - $160,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Data Analyst",
-//             description: "Analyze data to provide actionable insights for businesses.",
-//             requiredSkills: ["Excel", "Data", "Analysis"],
-//             salaryRange: "$50,000 - $90,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Game Developer",
-//             description: "Create video games for various platforms and devices.",
-//             requiredSkills: ["Game Design", "Programming", "Creativity"],
-//             salaryRange: "$60,000 - $100,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "AI Specialist",
-//             description: "Develop artificial intelligence and machine learning models.",
-//             requiredSkills: ["AI", "Python", "Data"],
-//             salaryRange: "$100,000 - $180,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Machine Learning Engineer",
-//             description: "Create machine learning models for various applications.",
-//             requiredSkills: ["Python", "Math", "Data"],
-//             salaryRange: "$90,000 - $150,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Robotics Engineer",
-//             description: "Design and build robots for various tasks and industries.",
-//             requiredSkills: ["Robotics", "Programming", "Engineering"],
-//             salaryRange: "$80,000 - $140,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Tech Writer",
-//             description: "Create documentation and manuals for technical products.",
-//             requiredSkills: ["Writing", "Technical Knowledge", "Research"],
-//             salaryRange: "$50,000 - $80,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Network Engineer",
-//             description: "Design and manage network systems for organizations.",
-//             requiredSkills: ["Networking", "Routing", "Problem-Solving"],
-//             salaryRange: "$70,000 - $120,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "QA Tester",
-//             description: "Test software for bugs and ensure quality before release.",
-//             requiredSkills: ["Testing", "Debugging", "Attention to Detail"],
-//             salaryRange: "$40,000 - $70,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Full Stack Developer",
-//             description: "Work on both frontend and backend development for applications.",
-//             requiredSkills: ["JavaScript", "Node.js", "React"],
-//             salaryRange: "$80,000 - $140,000",
-//             demand: 9,
-//           },
-//           {
-//             title: "Video Editor",
-//             description: "Edit and produce videos for media and marketing purposes.",
-//             requiredSkills: ["Editing", "Creativity", "Design"],
-//             salaryRange: "$40,000 - $70,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "IT Manager",
-//             description: "Oversee IT operations and manage teams for technical projects.",
-//             requiredSkills: ["Leadership", "Planning", "Communication"],
-//             salaryRange: "$90,000 - $160,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "Embedded Systems Engineer",
-//             description: "Develop hardware and software for embedded systems.",
-//             requiredSkills: ["C", "Assembly", "Electronics"],
-//             salaryRange: "$80,000 - $130,000",
-//             demand: 7,
-//           },
-//           {
-//             title: "Graphics Designer",
-//             description: "Create visual content for digital and print media.",
-//             requiredSkills: ["Design", "Photoshop", "Creativity"],
-//             salaryRange: "$40,000 - $80,000",
-//             demand: 8,
-//           },
-//           {
-//             title: "AR/VR Developer",
-//             description: "Build augmented and virtual reality applications.",
-//             requiredSkills: ["Unity", "C#", "Creativity"],
-//             salaryRange: "$80,000 - $140,000",
-//             demand: 7,
-//           },
-//       ];
-      
+  // 💻 Technology & Software Development
+  {
+    title: "Blockchain Developer",
+    description: "Builds decentralized applications and blockchain solutions.",
+    longDescription: "Blockchain developers work on designing and implementing secure blockchain-based systems...",
+    requiredSkills: ["Blockchain", "Cryptography", "Smart Contracts"],
+    salaryRange: "$100,000 - $200,000",
+    industry: "Technology & Software Development",
+    demand: 9,
+    growthPotential: 9,
+  },
+  {
+    title: "Cybersecurity Engineer",
+    description: "Protects computer systems from cyber threats.",
+    longDescription: "Cybersecurity engineers develop and implement security measures to protect networks and systems from attacks...",
+    requiredSkills: ["Network Security", "Ethical Hacking", "Penetration Testing"],
+    salaryRange: "$90,000 - $180,000",
+    industry: "Technology & Software Development",
+    demand: 10,
+    growthPotential: 9,
+  },
 
-//     for (const career of careers) {
-//         await prisma.career.create({data: career });
-//     }
+  // ⚡ Engineering & Manufacturing
+  {
+    title: "Aerospace Engineer",
+    description: "Designs and develops aircraft and spacecraft.",
+    longDescription: "Aerospace engineers focus on developing technology for aviation, defense, and space exploration...",
+    requiredSkills: ["Aerodynamics", "Mathematics", "Systems Engineering"],
+    salaryRange: "$80,000 - $160,000",
+    industry: "Engineering & Manufacturing",
+    demand: 8,
+    growthPotential: 7,
+  },
+  {
+    title: "Automotive Engineer",
+    description: "Designs and develops vehicles and their components.",
+    longDescription: "Automotive engineers focus on vehicle mechanics, safety, and efficiency, working on everything from engine performance to aerodynamics...",
+    requiredSkills: ["Mechanical Engineering", "CAD", "Automation"],
+    salaryRange: "$70,000 - $140,000",
+    industry: "Engineering & Manufacturing",
+    demand: 7,
+    growthPotential: 6,
+  },
 
-//     console.log("Career data loaded.")
-// }
+  // 📚 Education & Research
+  {
+    title: "Educational Consultant",
+    description: "Advises schools, teachers, and students on educational practices.",
+    longDescription: "Educational consultants develop strategies to improve learning outcomes and assist institutions with curriculum planning...",
+    requiredSkills: ["Teaching", "Communication", "Strategic Planning"],
+    salaryRange: "$50,000 - $100,000",
+    industry: "Education & Research",
+    demand: 7,
+    growthPotential: 7,
+  },
+  {
+    title: "Linguist",
+    description: "Studies languages and helps with translation and interpretation.",
+    longDescription: "Linguists analyze language structures, assist in translation, and conduct research in fields like computational linguistics...",
+    requiredSkills: ["Linguistics", "Writing", "Cultural Knowledge"],
+    salaryRange: "$40,000 - $90,000",
+    industry: "Education & Research",
+    demand: 6,
+    growthPotential: 6,
+  },
 
-// main()
-// .catch((e)=>{
-//     console.error(e);
-// })
-// .finally(async () => {
-//     await prisma.$disconnect();
-// })
+  // 🎨 Arts & Media
+  {
+    title: "Film Director",
+    description: "Oversees the production of movies and TV shows.",
+    longDescription: "A film director manages all aspects of a movie, from script selection to directing actors and overseeing production teams...",
+    requiredSkills: ["Storytelling", "Leadership", "Visual Creativity"],
+    salaryRange: "$80,000 - $250,000",
+    industry: "Arts & Media",
+    demand: 7,
+    growthPotential: 8,
+  },
+  {
+    title: "Music Producer",
+    description: "Creates and arranges music for recording artists and films.",
+    longDescription: "Music producers oversee sound recording, song arrangement, and mixing to create high-quality music productions...",
+    requiredSkills: ["Music Theory", "Audio Engineering", "Creativity"],
+    salaryRange: "$50,000 - $150,000",
+    industry: "Arts & Media",
+    demand: 6,
+    growthPotential: 7,
+  },
+];
+
+const updateCareers = async () => {
+    for (const career of careers) {
+      // Check if career already exists
+      const existingCareer = await prisma.career.findFirst({
+        where: { title: career.title },
+      });
+  
+      if (existingCareer) {
+        // Update existing career
+        await prisma.career.update({
+          where: { id: existingCareer.id }, // Now using the unique ID
+          data: {
+            longDescription: career.longDescription,
+            requiredSkills: career.requiredSkills,
+            industry: career.industry,
+            demand: career.demand,
+            growthPotential: career.growthPotential,
+          },
+        });
+        console.log(`Updated career: ${career.title}`);
+      } else {
+        // Create new career
+        await prisma.career.create({
+          data: career,
+        });
+        console.log(`Added new career: ${career.title}`);
+      }
+    }
+  };
+  
+  updateCareers()
+    .then(() => {
+      console.log("Careers updated successfully!");
+      prisma.$disconnect();
+    })
+    .catch((error) => {
+      console.error("Error updating careers:", error);
+      prisma.$disconnect();
+    });

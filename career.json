@@ -1,0 +1,1823 @@
+[
+  {
+    "id": "679651fc1179016f9763c4b2",
+    "title": "Software Engineer",
+    "description": "Develops and maintains software systems.",
+    "longDescription": null,
+    "requiredSkills": [
+      "JavaScript",
+      "React",
+      "Node.js",
+      "TypeScript",
+      "Git",
+      "Algorithms",
+      "System Design"
+    ],
+    "salaryRange": "$60,000 - $100,000",
+    "industry": "Technology",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": [{ "id": "679651fc1179016f9763c4b3" }]
+  },
+  {
+    "id": "67965683150e8fac20ece8c0",
+    "title": "Lawyer",
+    "description": "Provide legal advice and represent clients in court.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Legal Knowledge",
+      "Research",
+      "Negotiation",
+      "Contract Law",
+      "Litigation",
+      "Public Speaking"
+    ],
+    "salaryRange": "$80,000 - $200,000",
+    "industry": "Legal",
+    "demand": 8,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c1",
+    "title": "Surgeon",
+    "description": "Perform surgeries to treat injuries, diseases, or deformities.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Surgery",
+      "Precision",
+      "Patience",
+      "Medical Research",
+      "Emergency Response",
+      "Anatomy Knowledge"
+    ],
+    "salaryRange": "$150,000 - $400,000",
+    "industry": "Healthcare",
+    "demand": 9,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c2",
+    "title": "Architect",
+    "description": "Design and oversee construction of buildings and structures.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Design",
+      "Planning",
+      "Creativity",
+      "AutoCAD",
+      "3D Modeling",
+      "Building Codes"
+    ],
+    "salaryRange": "$70,000 - $120,000",
+    "industry": "Design & Construction",
+    "demand": 7,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c3",
+    "title": "Accountant",
+    "description": "Manage financial records and prepare tax filings.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Accounting",
+      "Mathematics",
+      "Organization",
+      "Financial Reporting",
+      "Taxation",
+      "Auditing"
+    ],
+    "salaryRange": "$50,000 - $100,000",
+    "industry": "Finance",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c4",
+    "title": "Psychologist",
+    "description": "Help patients manage mental health and emotional issues.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Counseling",
+      "Communication",
+      "Empathy",
+      "Cognitive Therapy",
+      "Behavioral Analysis",
+      "Mental Health Assessment"
+    ],
+    "salaryRange": "$60,000 - $120,000",
+    "industry": "Healthcare",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c5",
+    "title": "Pharmacist",
+    "description": "Prepare and dispense medications to patients.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Pharmacology",
+      "Attention to Detail",
+      "Communication",
+      "Medical Prescriptions",
+      "Patient Care",
+      "Drug Safety"
+    ],
+    "salaryRange": "$90,000 - $140,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c6",
+    "title": "Judge",
+    "description": "Preside over legal cases and interpret laws in court.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Legal Knowledge",
+      "Decision-Making",
+      "Fairness",
+      "Courtroom Procedures",
+      "Judicial Writing",
+      "Critical Thinking"
+    ],
+    "salaryRange": "$100,000 - $200,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965683150e8fac20ece8c7",
+    "title": "Civil Engineer",
+    "description": "Design and supervise construction of infrastructure projects.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Engineering",
+      "AutoCAD",
+      "Planning",
+      "Structural Design",
+      "Project Management",
+      "Construction Safety"
+    ],
+    "salaryRange": "$70,000 - $130,000",
+    "industry": "Engineering",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8c8",
+    "title": "Dentist",
+    "description": "Provide oral healthcare and perform dental procedures.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Dentistry",
+      "Precision",
+      "Communication",
+      "Oral Surgery",
+      "Patient Care",
+      "Dental Radiography"
+    ],
+    "salaryRange": "$100,000 - $200,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8c9",
+    "title": "Veterinarian",
+    "description": "Provide medical care for animals and pets.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Animal Care",
+      "Medical Knowledge",
+      "Patience",
+      "Veterinary Surgery",
+      "Emergency Animal Care",
+      "Diagnostic Imaging"
+    ],
+    "salaryRange": "$70,000 - $130,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8ca",
+    "title": "Economist",
+    "description": "Analyze economic trends and provide financial advice.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Research",
+      "Statistics",
+      "Analysis",
+      "Economic Forecasting",
+      "Market Trends",
+      "Financial Modeling"
+    ],
+    "salaryRange": "$80,000 - $150,000",
+    "industry": "Finance",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8cb",
+    "title": "Software Architect",
+    "description": "Design high-level solutions and software systems.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Programming",
+      "Design",
+      "Leadership",
+      "Microservices Architecture",
+      "Cloud Computing",
+      "Scalability Planning"
+    ],
+    "salaryRange": "$120,000 - $200,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8cc",
+    "title": "Biomedical Engineer",
+    "description": "Develop medical devices and healthcare technologies.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Engineering",
+      "Biology",
+      "Problem-Solving",
+      "Medical Device Development",
+      "Bioinformatics",
+      "Regulatory Compliance"
+    ],
+    "salaryRange": "$80,000 - $140,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8cd",
+    "title": "Management Consultant",
+    "description": "Advise organizations on improving business efficiency.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Problem-Solving",
+      "Communication",
+      "Strategy",
+      "Business Analysis",
+      "Process Improvement",
+      "Market Research"
+    ],
+    "salaryRange": "$100,000 - $200,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8ce",
+    "title": "Airline Pilot",
+    "description": "Fly and navigate airplanes for passenger or cargo transport.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Flying",
+      "Navigation",
+      "Safety",
+      "Aerodynamics",
+      "Emergency Handling",
+      "Flight Regulations"
+    ],
+    "salaryRange": "$120,000 - $250,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8cf",
+    "title": "Geologist",
+    "description": "Study the Earth’s materials and processes for exploration.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Geology",
+      "Research",
+      "Data Analysis",
+      "Mineral Exploration",
+      "Remote Sensing",
+      "Field Surveying"
+    ],
+    "salaryRange": "$70,000 - $120,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d0",
+    "title": "Environmental Scientist",
+    "description": "Study and manage environmental issues like pollution and conservation.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Research",
+      "Analysis",
+      "Problem-Solving",
+      "Climate Science",
+      "Environmental Regulations",
+      "Sustainability"
+    ],
+    "salaryRange": "$60,000 - $110,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d1",
+    "title": "Astronomer",
+    "description": "Study celestial objects and phenomena in space.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Physics",
+      "Mathematics",
+      "Research",
+      "Astrophysics",
+      "Telescope Operation",
+      "Data Analysis"
+    ],
+    "salaryRange": "$90,000 - $160,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d2",
+    "title": "Petroleum Engineer",
+    "description": "Design and develop methods for extracting oil and gas.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Engineering",
+      "Problem-Solving",
+      "Mathematics",
+      "Reservoir Simulation",
+      "Drilling Operations",
+      "Energy Economics"
+    ],
+    "salaryRange": "$110,000 - $180,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d3",
+    "title": "Corporate Lawyer",
+    "description": "Handle legal matters for businesses and corporations.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Corporate Law",
+      "Negotiation",
+      "Legal Writing",
+      "Contract Law",
+      "Mergers & Acquisitions",
+      "Business Regulations"
+    ],
+    "salaryRange": "$120,000 - $250,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d4",
+    "title": "Teacher",
+    "description": "Educate students and help them develop skills for the future.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Teaching",
+      "Communication",
+      "Planning",
+      "Classroom Management",
+      "Curriculum Development",
+      "Public Speaking"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d5",
+    "title": "Nurse",
+    "description": "Provide medical care and support to patients in various settings.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Nursing",
+      "Patient Care",
+      "Teamwork",
+      "Medication Administration",
+      "Critical Thinking",
+      "Emergency Care"
+    ],
+    "salaryRange": "$50,000 - $90,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d6",
+    "title": "Chef",
+    "description": "Prepare and cook meals in restaurants or hotels.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Cooking",
+      "Creativity",
+      "Time Management",
+      "Food Safety",
+      "Menu Planning",
+      "Pastry & Baking"
+    ],
+    "salaryRange": "$30,000 - $60,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d7",
+    "title": "Driver",
+    "description": "Transport goods or passengers safely and efficiently.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Driving",
+      "Navigation",
+      "Time Management",
+      "Vehicle Maintenance",
+      "Traffic Laws",
+      "Safety Awareness"
+    ],
+    "salaryRange": "$20,000 - $50,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d8",
+    "title": "Artist",
+    "description": "Create artworks like paintings, sculptures, or digital designs.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Drawing",
+      "Creativity",
+      "Design",
+      "Painting",
+      "Illustration",
+      "Concept Art"
+    ],
+    "salaryRange": "$25,000 - $60,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965684150e8fac20ece8d9",
+    "title": "Farmer",
+    "description": "Grow crops or raise livestock for food and agricultural purposes.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Farming",
+      "Machinery",
+      "Planning",
+      "Soil Management",
+      "Irrigation Techniques",
+      "Crop Rotation"
+    ],
+    "salaryRange": "$25,000 - $50,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8da",
+    "title": "Mechanic",
+    "description": "Repair and maintain vehicles or machinery.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Repairing",
+      "Problem-Solving",
+      "Driving",
+      "Automotive Diagnostics",
+      "Electrical Systems",
+      "Hydraulics"
+    ],
+    "salaryRange": "$30,000 - $55,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8db",
+    "title": "Photographer",
+    "description": "Capture and edit photos for various purposes like events or advertising.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Photography",
+      "Editing",
+      "Creativity",
+      "Lighting Techniques",
+      "Composition",
+      "Photo Retouching"
+    ],
+    "salaryRange": "$20,000 - $50,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8dc",
+    "title": "Salesperson",
+    "description": "Sell products or services and assist customers with their needs.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Sales",
+      "Customer Service",
+      "Communication",
+      "Persuasion",
+      "CRM Software",
+      "Market Analysis"
+    ],
+    "salaryRange": "$25,000 - $50,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8dd",
+    "title": "Construction Worker",
+    "description": "Build and repair structures like houses, roads, or bridges.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Construction",
+      "Teamwork",
+      "Safety",
+      "Blueprint Reading",
+      "Masonry",
+      "Carpentry"
+    ],
+    "salaryRange": "$20,000 - $45,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8de",
+    "title": "Fitness Trainer",
+    "description": "Help clients achieve their fitness goals through training and guidance.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Fitness",
+      "Motivation",
+      "Teaching",
+      "Personal Training",
+      "Nutrition",
+      "Workout Programming"
+    ],
+    "salaryRange": "$30,000 - $60,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8df",
+    "title": "Translator",
+    "description": "Translate written or spoken content from one language to another.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Language",
+      "Writing",
+      "Speaking",
+      "Interpretation",
+      "Cultural Awareness",
+      "Grammar"
+    ],
+    "salaryRange": "$35,000 - $70,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e0",
+    "title": "Event Planner",
+    "description": "Organize and coordinate events like weddings, conferences, and parties.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Planning",
+      "Organization",
+      "Communication",
+      "Budgeting",
+      "Vendor Coordination",
+      "Public Relations"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e1",
+    "title": "Police Officer",
+    "description": "Protect the public and maintain law and order.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Safety",
+      "Driving",
+      "Problem-Solving",
+      "Law Enforcement",
+      "Crisis Management",
+      "Investigation"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e2",
+    "title": "Hairdresser",
+    "description": "Style and cut hair for clients in salons or barbershops.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Hairdressing",
+      "Customer Service",
+      "Creativity",
+      "Hair Coloring",
+      "Styling Techniques",
+      "Scissor Skills"
+    ],
+    "salaryRange": "$25,000 - $50,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e3",
+    "title": "Interior Designer",
+    "description": "Plan and design indoor spaces to make them functional and beautiful.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Design",
+      "Creativity",
+      "Planning",
+      "Space Planning",
+      "3D Rendering",
+      "Color Theory"
+    ],
+    "salaryRange": "$40,000 - $80,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e4",
+    "title": "Delivery Driver",
+    "description": "Deliver goods and packages to customers on time.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Driving",
+      "Navigation",
+      "Time Management",
+      "Logistics",
+      "Route Planning",
+      "Customer Service"
+    ],
+    "salaryRange": "$25,000 - $50,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e5",
+    "title": "Customer Service Representative",
+    "description": "Assist customers with questions, complaints, and product support.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Customer Service",
+      "Communication",
+      "Problem-Solving",
+      "Call Handling",
+      "CRM Software",
+      "Active Listening"
+    ],
+    "salaryRange": "$25,000 - $45,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e6",
+    "title": "Tour Guide",
+    "description": "Lead tours and provide information about attractions or locations.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Speaking",
+      "Knowledge",
+      "Communication",
+      "Cultural Awareness",
+      "Storytelling",
+      "Public Speaking"
+    ],
+    "salaryRange": "$25,000 - $45,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e7",
+    "title": "Retail Worker",
+    "description": "Assist customers in retail stores with purchases and inquiries.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Customer Service",
+      "Sales",
+      "Organization",
+      "Inventory Management",
+      "Point-of-Sale Systems",
+      "Merchandising"
+    ],
+    "salaryRange": "$20,000 - $40,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e8",
+    "title": "Taxi Driver",
+    "description": "Drive passengers to their destinations safely and on time.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Driving",
+      "Navigation",
+      "Customer Service",
+      "Defensive Driving",
+      "Local Knowledge",
+      "Vehicle Maintenance"
+    ],
+    "salaryRange": "$20,000 - $40,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8e9",
+    "title": "Receptionist",
+    "description": "Manage front desk operations and assist visitors and staff.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Communication",
+      "Organization",
+      "Customer Service",
+      "Multitasking",
+      "Administrative Support",
+      "Scheduling"
+    ],
+    "salaryRange": "$25,000 - $45,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965685150e8fac20ece8ea",
+    "title": "Waiter",
+    "description": "Serve food and beverages in restaurants and cafes.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Customer Service",
+      "Teamwork",
+      "Communication",
+      "Time Management",
+      "Order Taking",
+      "Food Handling"
+    ],
+    "salaryRange": "$20,000 - $35,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8eb",
+    "title": "Electrician",
+    "description": "Install and maintain electrical systems in homes and businesses.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Electrical Work",
+      "Safety",
+      "Problem-Solving",
+      "Circuitry",
+      "Wiring",
+      "Troubleshooting"
+    ],
+    "salaryRange": "$35,000 - $60,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8ec",
+    "title": "Plumber",
+    "description": "Install and repair water and drainage systems.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Plumbing",
+      "Problem-Solving",
+      "Safety",
+      "Pipe Installation",
+      "Water Systems",
+      "Repair Work"
+    ],
+    "salaryRange": "$35,000 - $55,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8ed",
+    "title": "Veterinarian",
+    "description": "Provide medical care to animals and pets.",
+    "longDescription": null,
+    "requiredSkills": ["Animal Care", "Medical Knowledge", "Patience"],
+    "salaryRange": "$60,000 - $100,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8ee",
+    "title": "Carpenter",
+    "description": "Build and repair wooden structures and furniture.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Carpentry",
+      "Design",
+      "Safety",
+      "Blueprint Reading",
+      "Woodworking",
+      "Precision Cutting"
+    ],
+    "salaryRange": "$30,000 - $50,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8ef",
+    "title": "Painter",
+    "description": "Paint buildings, walls, or art pieces for aesthetics and protection.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Painting",
+      "Design",
+      "Creativity",
+      "Surface Preparation",
+      "Color Mixing",
+      "Detailing"
+    ],
+    "salaryRange": "$20,000 - $40,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f0",
+    "title": "Barista",
+    "description": "Prepare and serve coffee and other beverages in cafes.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Coffee Making",
+      "Customer Service",
+      "Time Management",
+      "Latte Art",
+      "Drink Customization",
+      "Cash Handling"
+    ],
+    "salaryRange": "$20,000 - $35,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f1",
+    "title": "Bartender",
+    "description": "Mix and serve drinks to customers at bars or restaurants.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Mixology",
+      "Customer Service",
+      "Communication",
+      "Cocktail Making",
+      "Time Management",
+      "Alcohol Knowledge"
+    ],
+    "salaryRange": "$25,000 - $50,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f2",
+    "title": "Gardener",
+    "description": "Maintain gardens, plants, and landscapes.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Gardening",
+      "Planning",
+      "Maintenance",
+      "Plant Care",
+      "Landscape Design",
+      "Irrigation Systems"
+    ],
+    "salaryRange": "$20,000 - $40,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f3",
+    "title": "Librarian",
+    "description": "Organize and manage library resources and assist visitors.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Organization",
+      "Research",
+      "Communication",
+      "Cataloging",
+      "Library Management",
+      "Information Retrieval"
+    ],
+    "salaryRange": "$35,000 - $60,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f4",
+    "title": "Social Worker",
+    "description": "Support individuals and communities to improve their lives.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Empathy",
+      "Communication",
+      "Problem-Solving",
+      "Counseling",
+      "Crisis Intervention",
+      "Case Management"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f5",
+    "title": "Baker",
+    "description": "Prepare and bake bread, cakes, and pastries.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Baking",
+      "Creativity",
+      "Time Management",
+      "Dough Preparation",
+      "Recipe Development",
+      "Pastry Making"
+    ],
+    "salaryRange": "$25,000 - $50,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f6",
+    "title": "Beautician",
+    "description": "Provide beauty treatments such as facials and makeup.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Makeup",
+      "Customer Service",
+      "Creativity",
+      "Skincare",
+      "Hair Styling",
+      "Beauty Treatments"
+    ],
+    "salaryRange": "$25,000 - $45,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f7",
+    "title": "Pilot",
+    "description": "Operate and navigate airplanes to transport passengers or cargo.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Flying",
+      "Navigation",
+      "Safety",
+      "Aircraft Operations",
+      "Weather Analysis",
+      "Emergency Procedures"
+    ],
+    "salaryRange": "$80,000 - $150,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f8",
+    "title": "Flight Attendant",
+    "description": "Ensure passenger safety and comfort during flights.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Customer Service",
+      "Safety",
+      "Communication",
+      "First Aid",
+      "Emergency Procedures",
+      "Hospitality"
+    ],
+    "salaryRange": "$30,000 - $60,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8f9",
+    "title": "Travel Agent",
+    "description": "Plan and book travel arrangements for clients.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Planning",
+      "Sales",
+      "Communication",
+      "Booking Systems",
+      "Itinerary Creation",
+      "Customer Relations"
+    ],
+    "salaryRange": "$30,000 - $55,000",
+    "industry": "General",
+    "demand": 6,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8fa",
+    "title": "Zookeeper",
+    "description": "Care for and maintain animals in a zoo or sanctuary.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Animal Care",
+      "Patience",
+      "Maintenance",
+      "Wildlife Handling",
+      "Conservation Knowledge",
+      "Observation Skills"
+    ],
+    "salaryRange": "$30,000 - $50,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8fb",
+    "title": "Warehouse Worker",
+    "description": "Organize, load, and unload goods in warehouses.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Organization",
+      "Lifting",
+      "Teamwork",
+      "Inventory Management",
+      "Forklift Operation",
+      "Packaging"
+    ],
+    "salaryRange": "$25,000 - $45,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965686150e8fac20ece8fc",
+    "title": "Housekeeper",
+    "description": "Maintain cleanliness and order in residential or commercial spaces.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Cleaning",
+      "Organization",
+      "Time Management",
+      "Attention to Detail",
+      "Laundry Services",
+      "Hospitality"
+    ],
+    "salaryRange": "$20,000 - $35,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece8fd",
+    "title": "Real Estate Agent",
+    "description": "Help clients buy, sell, or rent properties.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Sales",
+      "Communication",
+      "Negotiation",
+      "Property Evaluation",
+      "Market Analysis",
+      "Customer Relations"
+    ],
+    "salaryRange": "$50,000 - $100,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece8fe",
+    "title": "Journalist",
+    "description": "Research and report news stories for media outlets.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Writing",
+      "Research",
+      "Communication",
+      "Interviewing",
+      "Investigative Reporting",
+      "Content Creation"
+    ],
+    "salaryRange": "$40,000 - $80,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece8ff",
+    "title": "Legal Assistant",
+    "description": "Support lawyers by managing legal documents and communication.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Organization",
+      "Legal Knowledge",
+      "Communication",
+      "Document Drafting",
+      "Case Management",
+      "Research"
+    ],
+    "salaryRange": "$35,000 - $55,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece900",
+    "title": "Web Developer",
+    "description": "Build and maintain websites and web applications.",
+    "longDescription": null,
+    "requiredSkills": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "React",
+      "Frontend Development",
+      "API Integration"
+    ],
+    "salaryRange": "$50,000 - $90,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece901",
+    "title": "Software Developer",
+    "description": "Design and create software for various platforms.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Programming",
+      "Problem-Solving",
+      "Debugging",
+      "Python",
+      "Java",
+      "Database Management"
+    ],
+    "salaryRange": "$70,000 - $120,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece902",
+    "title": "IT Support Specialist",
+    "description": "Provide technical support and troubleshoot IT issues.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Troubleshooting",
+      "Hardware",
+      "Communication",
+      "Networking",
+      "Technical Support",
+      "Operating Systems"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece903",
+    "title": "Database Administrator",
+    "description": "Manage and optimize databases for storing information.",
+    "longDescription": null,
+    "requiredSkills": [
+      "SQL",
+      "Organization",
+      "Analysis",
+      "Database Security",
+      "Performance Tuning",
+      "Backup and Recovery"
+    ],
+    "salaryRange": "$60,000 - $100,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 5,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece904",
+    "title": "UI/UX Designer",
+    "description": "Design user interfaces and improve user experience.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Design",
+      "Creativity",
+      "Prototyping",
+      "User Research",
+      "Wireframing",
+      "Typography"
+    ],
+    "salaryRange": "$50,000 - $90,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece905",
+    "title": "System Administrator",
+    "description": "Manage and maintain IT infrastructure and networks.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Networking",
+      "Linux",
+      "Troubleshooting",
+      "Cloud Management",
+      "Security Protocols",
+      "Server Maintenance"
+    ],
+    "salaryRange": "$60,000 - $100,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece906",
+    "title": "Mobile App Developer",
+    "description": "Create and maintain apps for Android and iOS platforms.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Java",
+      "Swift",
+      "Design",
+      "Cross-Platform Development",
+      "Mobile UI/UX",
+      "App Store Deployment"
+    ],
+    "salaryRange": "$70,000 - $120,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": [{ "id": "679a01221211663b6e746537" }]
+  },
+  {
+    "id": "67965687150e8fac20ece907",
+    "title": "Cybersecurity Specialist",
+    "description": "Protect systems and data from security threats.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Security",
+      "Problem-Solving",
+      "Analysis",
+      "Network Defense",
+      "Risk Assessment",
+      "Ethical Hacking"
+    ],
+    "salaryRange": "$80,000 - $140,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece908",
+    "title": "DevOps Engineer",
+    "description": "Automate and manage software development pipelines.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Automation",
+      "Docker",
+      "Kubernetes",
+      "CI/CD Pipelines",
+      "Infrastructure as Code",
+      "Cloud Platforms"
+    ],
+    "salaryRange": "$90,000 - $150,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece909",
+    "title": "Cloud Engineer",
+    "description": "Build and maintain cloud-based solutions and systems.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Cloud",
+      "AWS",
+      "Networking",
+      "Virtualization",
+      "Security Policies",
+      "Cloud Architecture"
+    ],
+    "salaryRange": "$100,000 - $160,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece90a",
+    "title": "Data Analyst",
+    "description": "Analyze data to provide actionable insights for businesses.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Excel",
+      "Data",
+      "Analysis",
+      "SQL",
+      "Statistical Modeling",
+      "Data Visualization"
+    ],
+    "salaryRange": "$50,000 - $90,000",
+    "industry": "Technology",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece90b",
+    "title": "Game Developer",
+    "description": "Create video games for various platforms and devices.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Game Design",
+      "Programming",
+      "Creativity",
+      "Unity",
+      "3D Modeling",
+      "Physics Engines"
+    ],
+    "salaryRange": "$60,000 - $100,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece90c",
+    "title": "AI Specialist",
+    "description": "Develop artificial intelligence and machine learning models.",
+    "longDescription": null,
+    "requiredSkills": [
+      "AI",
+      "Python",
+      "Data Science",
+      "Deep Learning",
+      "Natural Language Processing",
+      "Computer Vision"
+    ],
+    "salaryRange": "$100,000 - $180,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece90d",
+    "title": "Machine Learning Engineer",
+    "description": "Create machine learning models for various applications.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Python",
+      "Math",
+      "Data Science",
+      "Neural Networks",
+      "Supervised Learning",
+      "TensorFlow"
+    ],
+    "salaryRange": "$90,000 - $150,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece90e",
+    "title": "Robotics Engineer",
+    "description": "Design and build robots for various tasks and industries.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Robotics",
+      "Programming",
+      "Engineering",
+      "Mechanical Systems",
+      "Autonomous Systems",
+      "C++"
+    ],
+    "salaryRange": "$80,000 - $140,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965687150e8fac20ece90f",
+    "title": "Tech Writer",
+    "description": "Create documentation and manuals for technical products.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Writing",
+      "Technical Knowledge",
+      "Research",
+      "Documentation",
+      "Editing",
+      "API Documentation"
+    ],
+    "salaryRange": "$50,000 - $80,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece910",
+    "title": "Network Engineer",
+    "description": "Design and manage network systems for organizations.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Networking",
+      "Routing",
+      "Problem-Solving",
+      "Firewall Management",
+      "VPN Configuration",
+      "Cisco Technologies"
+    ],
+    "salaryRange": "$70,000 - $120,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece911",
+    "title": "QA Tester",
+    "description": "Test software for bugs and ensure quality before release.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Testing",
+      "Debugging",
+      "Attention to Detail",
+      "Automation Testing",
+      "Manual Testing",
+      "Selenium"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece912",
+    "title": "Full Stack Developer",
+    "description": "Work on both frontend and backend development for applications.",
+    "longDescription": null,
+    "requiredSkills": [
+      "JavaScript",
+      "Node.js",
+      "React",
+      "Database Management",
+      "Backend Development",
+      "Cloud Hosting"
+    ],
+    "salaryRange": "$80,000 - $140,000",
+    "industry": "General",
+    "demand": 9,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece913",
+    "title": "Video Editor",
+    "description": "Edit and produce videos for media and marketing purposes.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Editing",
+      "Creativity",
+      "Design",
+      "Adobe Premiere",
+      "After Effects",
+      "Color Grading"
+    ],
+    "salaryRange": "$40,000 - $70,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece914",
+    "title": "IT Manager",
+    "description": "Oversee IT operations and manage teams for technical projects.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Leadership",
+      "Planning",
+      "Communication",
+      "IT Infrastructure",
+      "Project Management",
+      "Security Compliance"
+    ],
+    "salaryRange": "$90,000 - $160,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece915",
+    "title": "Embedded Systems Engineer",
+    "description": "Develop hardware and software for embedded systems.",
+    "longDescription": null,
+    "requiredSkills": [
+      "C",
+      "Assembly",
+      "Electronics",
+      "Microcontrollers",
+      "Firmware Development",
+      "RTOS"
+    ],
+    "salaryRange": "$80,000 - $130,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece916",
+    "title": "Graphics Designer",
+    "description": "Create visual content for digital and print media.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Design",
+      "Photoshop",
+      "Creativity",
+      "Illustration",
+      "UI/UX Design",
+      "Branding"
+    ],
+    "salaryRange": "$40,000 - $80,000",
+    "industry": "General",
+    "demand": 8,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67965688150e8fac20ece917",
+    "title": "AR/VR Developer",
+    "description": "Build augmented and virtual reality applications.",
+    "longDescription": null,
+    "requiredSkills": [
+      "Unity",
+      "C#",
+      "Creativity",
+      "3D Modeling",
+      "Game Physics",
+      "Augmented Reality"
+    ],
+    "salaryRange": "$80,000 - $140,000",
+    "industry": "General",
+    "demand": 7,
+    "growthPotential": 10,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf41c",
+    "title": "Cardiologist",
+    "description": "Diagnoses and treats heart-related diseases.",
+    "longDescription": "A cardiologist specializes in diagnosing and treating conditions of the cardiovascular system...",
+    "requiredSkills": ["Medical Knowledge", "Patient Care", "Cardiology"],
+    "salaryRange": "$200,000 - $400,000",
+    "industry": "Healthcare & Medicine",
+    "demand": 9,
+    "growthPotential": 8,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf41d",
+    "title": "Physical Therapist",
+    "description": "Helps patients recover from injuries and improve mobility.",
+    "longDescription": "Physical therapists work with patients to restore mobility, relieve pain, and prevent disabilities...",
+    "requiredSkills": ["Physiotherapy", "Patient Care", "Communication"],
+    "salaryRange": "$60,000 - $120,000",
+    "industry": "Healthcare & Medicine",
+    "demand": 8,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf41e",
+    "title": "Investment Banker",
+    "description": "Manages financial assets and advises clients on investment opportunities.",
+    "longDescription": "Investment bankers work with corporations, governments, and investors to manage capital and financial strategies...",
+    "requiredSkills": ["Financial Analysis", "Risk Assessment", "Negotiation"],
+    "salaryRange": "$100,000 - $300,000",
+    "industry": "Business & Finance",
+    "demand": 8,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf41f",
+    "title": "Supply Chain Manager",
+    "description": "Oversees procurement, production, and distribution processes.",
+    "longDescription": "A supply chain manager ensures efficient and cost-effective procurement, production, and delivery of goods...",
+    "requiredSkills": ["Logistics", "Project Management", "Data Analysis"],
+    "salaryRange": "$80,000 - $150,000",
+    "industry": "Business & Finance",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf420",
+    "title": "Blockchain Developer",
+    "description": "Builds decentralized applications and blockchain solutions.",
+    "longDescription": "Blockchain developers work on designing and implementing secure blockchain-based systems...",
+    "requiredSkills": ["Blockchain", "Cryptography", "Smart Contracts"],
+    "salaryRange": "$100,000 - $200,000",
+    "industry": "Technology & Software Development",
+    "demand": 9,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf421",
+    "title": "Cybersecurity Engineer",
+    "description": "Protects computer systems from cyber threats.",
+    "longDescription": "Cybersecurity engineers develop and implement security measures to protect networks and systems from attacks...",
+    "requiredSkills": [
+      "Network Security",
+      "Ethical Hacking",
+      "Penetration Testing"
+    ],
+    "salaryRange": "$90,000 - $180,000",
+    "industry": "Technology & Software Development",
+    "demand": 10,
+    "growthPotential": 9,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce97244fe9bf82aaf422",
+    "title": "Aerospace Engineer",
+    "description": "Designs and develops aircraft and spacecraft.",
+    "longDescription": "Aerospace engineers focus on developing technology for aviation, defense, and space exploration...",
+    "requiredSkills": ["Aerodynamics", "Mathematics", "Systems Engineering"],
+    "salaryRange": "$80,000 - $160,000",
+    "industry": "Engineering & Manufacturing",
+    "demand": 8,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce98244fe9bf82aaf423",
+    "title": "Automotive Engineer",
+    "description": "Designs and develops vehicles and their components.",
+    "longDescription": "Automotive engineers focus on vehicle mechanics, safety, and efficiency, working on everything from engine performance to aerodynamics...",
+    "requiredSkills": ["Mechanical Engineering", "CAD", "Automation"],
+    "salaryRange": "$70,000 - $140,000",
+    "industry": "Engineering & Manufacturing",
+    "demand": 7,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce98244fe9bf82aaf424",
+    "title": "Educational Consultant",
+    "description": "Advises schools, teachers, and students on educational practices.",
+    "longDescription": "Educational consultants develop strategies to improve learning outcomes and assist institutions with curriculum planning...",
+    "requiredSkills": ["Teaching", "Communication", "Strategic Planning"],
+    "salaryRange": "$50,000 - $100,000",
+    "industry": "Education & Research",
+    "demand": 7,
+    "growthPotential": 7,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce98244fe9bf82aaf425",
+    "title": "Linguist",
+    "description": "Studies languages and helps with translation and interpretation.",
+    "longDescription": "Linguists analyze language structures, assist in translation, and conduct research in fields like computational linguistics...",
+    "requiredSkills": ["Linguistics", "Writing", "Cultural Knowledge"],
+    "salaryRange": "$40,000 - $90,000",
+    "industry": "Education & Research",
+    "demand": 6,
+    "growthPotential": 6,
+    "recommendations": []
+  },
+  {
+    "id": "67b1ce98244fe9bf82aaf426",
+    "title": "Film Director",
+    "description": "Oversees the production of movies and TV shows.",
+    "longDescription": "A film director manages all aspects of a movie, from script selection to directing actors and overseeing production teams...",
+    "requiredSkills": ["Storytelling", "Leadership", "Visual Creativity"],
+    "salaryRange": "$80,000 - $250,000",
+    "industry": "Arts & Media",
+    "demand": 7,
+    "growthPotential": 8,
+    "recommendations": []
+  }
+]

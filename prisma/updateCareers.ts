@@ -1,78 +1,35 @@
 import { PrismaClient } from "@prisma/client";
+import fs from "fs";
 
 const prisma = new PrismaClient();
 
-async function updateCareers() {
-  console.log("🔄 Updating careers with missing fields...");
+// Load the chunk data
+const updatedCareers = JSON.parse(fs.readFileSync("prisma/chunk1.json", "utf-8"));
 
-  const careers = await prisma.career.findMany();
+const updateRequiredSkills = async () => {
+  for (const career of updatedCareers) {
+    const existingCareer = await prisma.career.findFirst({
+      where: { title: career.title }, // Search by title instead of ID
+    });
 
-  for (const career of careers) {
-    let updateData: any = {};
-
-
-    // ✅ Ensure the industry is set
-    if (!career.industry) {
-      updateData.industry = mapTitleToIndustry(career.title);
-    }
-
-    // ✅ Assign random growth potential and job availability
-    if (career.growthPotential === null) {
-      updateData.growthPotential = getRandomValue(5, 10); // Growth potential (scale 5-10)
-    }
-
-
-
-    // ✅ Only update if there are changes
-    if (Object.keys(updateData).length > 0) {
+    if (existingCareer) {
       await prisma.career.update({
-        where: { id: career.id },
-        data: updateData,
+        where: { id: existingCareer.id }, // Use the found ID
+        data: { requiredSkills: career.requiredSkills },
       });
-      console.log(`✅ Updated: ${career.title} with ${JSON.stringify(updateData)}`);
+      console.log(`✅ Updated skills for: ${career.title}`);
+    } else {
+      console.log(`❌ Career not found: ${career.title}`);
     }
   }
+};
 
-  console.log("✅ All careers updated successfully!");
-}
-
-// ✅ Extracts salary min and max from "salaryRange" string
-function extractSalaryRange(salaryRange: string) {
-  const match = salaryRange.match(/\$?(\d{1,3}(?:,\d{3})*)/g);
-  if (match) {
-    const min = parseInt(match[0].replace(/,/g, ""), 10) || 0;
-    const max = parseInt(match[1]?.replace(/,/g, ""), 10) || min;
-    return { min, max };
-  }
-  return { min: 0, max: 0 };
-}
-
-// ✅ Maps job titles to industries
-function mapTitleToIndustry(title: string) {
-  const industryMap: { [key: string]: string } = {
-    "Lawyer": "Legal",
-    "Surgeon": "Healthcare",
-    "Software Engineer": "Technology",
-    "Architect": "Design & Construction",
-    "Economist": "Finance",
-    "Civil Engineer": "Engineering",
-    "Data Analyst": "Technology",
-    "Psychologist": "Healthcare",
-    "Accountant": "Finance",
-  };
-
-  return industryMap[title] || "General";
-}
-
-// ✅ Generates a random value within a range
-function getRandomValue(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-updateCareers()
-  .catch((e) => {
-    console.error("❌ Error updating careers:", e);
+updateRequiredSkills()
+  .then(() => {
+    console.log("✅ Career skills updated successfully!");
+    prisma.$disconnect();
   })
-  .finally(async () => {
-    await prisma.$disconnect();
+  .catch((error) => {
+    console.error("❌ Error updating careers:", error);
+    prisma.$disconnect();
   });
