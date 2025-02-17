@@ -99,6 +99,7 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         id: true,
         title: true,
         description: true,
+        longDescription: true,
         requiredSkills: true,
         salaryRange: true,
         industry: true,
@@ -106,29 +107,54 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         growthPotential: true,
       },
     });
+
     console.log("🛠 Careers Fetched from Database:", careers);
 
-    // ✅ Calculate matching scores
+    // ✅ Define weighting factors
+    const SKILL_WEIGHT = 2.0;  // Skills have higher priority
+    const INTEREST_WEIGHT = 1.5;
+    const DEMAND_WEIGHT = 1.2;
+    const GROWTH_WEIGHT = 1.2;
+    const SALARY_WEIGHT = 1.0;
+
+    // ✅ Normalize scores and calculate matches
     const scoredCareers = careers.map((career) => {
       let skillScore = 0;
       let interestScore = 0;
 
-      // ✅ Match skills
+      // ✅ Match skills with **partial match scoring**
       if (career.requiredSkills) {
-        skillScore = career.requiredSkills.filter((skill) =>
-          skills.toLowerCase().includes(skill.toLowerCase())
-        ).length;
+        skillScore = career.requiredSkills.reduce((score, skill) => {
+          return skills.toLowerCase().includes(skill.toLowerCase()) ? score + 1 : score;
+        }, 0);
       }
 
-      // ✅ Match interests
-      if (career.description.toLowerCase().includes(interests.toLowerCase())) {
-        interestScore += 1;
-      }
+      // ✅ Match interests **against both description and longDescription**
+      const interestMatches = (career.description + " " + (career.longDescription || ""))
+        .toLowerCase()
+        .split(" ")
+        .filter(word => interests.toLowerCase().includes(word));
+
+      interestScore = interestMatches.length;
 
       // ✅ Extract salaryMin and salaryMax from salaryRange
       const salaryMatch = career.salaryRange.match(/\$([\d,]+) - \$([\d,]+)/);
       const salaryMin = salaryMatch ? parseInt(salaryMatch[1].replace(/,/g, ""), 10) : null;
       const salaryMax = salaryMatch ? parseInt(salaryMatch[2].replace(/,/g, ""), 10) : null;
+
+      // ✅ Normalize career factors (if null, assume a median value)
+      const demandScore = career.demand ?? 5; // Default if null
+      const growthScore = career.growthPotential ?? 5; // Default if null
+      const salaryScore = salaryMax ? salaryMax / 10000 : 5; // Scale salary range
+
+      // ✅ Calculate weighted total score
+      const totalScore = (
+        (skillScore * SKILL_WEIGHT) +
+        (interestScore * INTEREST_WEIGHT) +
+        (demandScore * DEMAND_WEIGHT) +
+        (growthScore * GROWTH_WEIGHT) +
+        (salaryScore * SALARY_WEIGHT)
+      );
 
       return {
         id: career.id,
@@ -140,14 +166,23 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         growthPotential: career.growthPotential,
         salaryMin,
         salaryMax,
-        totalScore: skillScore + interestScore,
+        totalScore
       };
     });
 
+    // ✅ Normalize total scores (convert to percentage scale)
+    const maxScore = Math.max(...scoredCareers.map(c => c.totalScore));
+    const normalizedCareers = scoredCareers.map(career => ({
+      ...career,
+      totalScore: maxScore ? Math.round((career.totalScore / maxScore) * 100) : 0
+    }));
+
     // ✅ Sort and return top 3 recommendations
-    return scoredCareers.sort((a, b) => b.totalScore - a.totalScore).slice(0, 3);
+    return normalizedCareers.sort((a, b) => b.totalScore - a.totalScore).slice(0, 3);
+
   } catch (error) {
     console.error("❌ Error generating recommendations:", error);
     return [];
   }
 };
+
