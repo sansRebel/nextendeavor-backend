@@ -143,7 +143,18 @@ export const viewCareer = async (req: Request, res: Response): Promise<void> => 
 
     try {
         const career = await prisma.career.findUnique({
-            where: {id: careerId}
+            where: {id: careerId},
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                longDescription: true, 
+                requiredSkills: true,
+                salaryRange: true,
+                industry: true,
+                demand: true,
+                growthPotential: true
+            }
         });
 
         if (!career){
