@@ -177,12 +177,24 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
       totalScore: maxScore ? Math.round((career.totalScore / maxScore) * 100) : 0
     }));
 
-    // ✅ Sort and return top 3 recommendations
-    return normalizedCareers.sort((a, b) => b.totalScore - a.totalScore).slice(0, 3);
+    // ✅ Sort careers by score in descending order
+    const sortedCareers = normalizedCareers.sort((a, b) => b.totalScore - a.totalScore);
+
+    // ✅ Select top recommendation
+    const topRecommendation = sortedCareers[0];
+
+    // ✅ Only include additional recommendations if they have at least **80% of the top score**
+    const additionalRecommendations = sortedCareers
+      .slice(1)
+      .filter(career => career.totalScore >= topRecommendation.totalScore * 0.8);
+
+    // ✅ Combine and return results (1 to 2 recommendations max)
+    return [topRecommendation, ...additionalRecommendations].slice(0, 2);
 
   } catch (error) {
     console.error("❌ Error generating recommendations:", error);
     return [];
   }
 };
+
 
