@@ -139,32 +139,34 @@ export const clearRecommendations = async (req: AuthenticatedRequest, res: Respo
 };
 
 export const viewCareer = async (req: Request, res: Response): Promise<void> => {
-    const {careerId} = req.params;
+    const { careerId } = req.params; 
 
     try {
+        // Fetch the career by ID, forcing Prisma to include all fields
         const career = await prisma.career.findUnique({
-            where: {id: careerId},
-            select: {
-                id: true,
-                title: true,
-                description: true,
-                longDescription: true, 
-                requiredSkills: true,
-                salaryRange: true,
-                industry: true,
-                demand: true,
-                growthPotential: true
-            }
+            where: { id: careerId }
         });
 
-        if (!career){
-            res.status(404).json({ error: "Career not found"});
+        if (!career) {
+            res.status(404).json({ error: "Career not found" });
             return;
         }
 
-        res.status(200).json(career);
-    }catch(error) {
-        console.error("Error fetching career", error);
-        res.status(500).json({error: "Internal server error"});
+        // Ensure the response includes longDescription
+        res.status(200).json({
+            id: career.id,
+            title: career.title,
+            description: career.description,
+            longDescription: career.longDescription || "", // Prevents undefined errors
+            requiredSkills: career.requiredSkills,
+            salaryRange: career.salaryRange,
+            industry: career.industry,
+            demand: career.demand,
+            growthPotential: career.growthPotential
+        });
+
+    } catch (error) {
+        console.error("Error fetching career:", error);
+        res.status(500).json({ error: "Internal Server Error" });
     }
 };
