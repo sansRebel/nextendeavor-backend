@@ -99,7 +99,6 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         id: true,
         title: true,
         description: true,
-        longDescription: true,
         requiredSkills: true,
         salaryRange: true,
         industry: true,
@@ -110,53 +109,27 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
 
     console.log("🛠 Careers Fetched from Database:", careers);
 
-    // ✅ Define weighting factors
-    const SKILL_WEIGHT = 2.5;  // Give more priority to skills
-    const INTEREST_WEIGHT = 1.8;
-    const DEMAND_WEIGHT = 1.2;
-    const GROWTH_WEIGHT = 1.2;
-    const SALARY_WEIGHT = 1.0;
-
-    // ✅ Convert skills & interests into sets of words (for exact matching)
-    const skillWords = new Set(skills.toLowerCase().split(/\s+/));
-    const interestWords = new Set(interests.toLowerCase().split(/\s+/));
-
-    // ✅ Normalize scores and calculate matches
+    // ✅ Calculate matching scores
     const scoredCareers = careers.map((career) => {
       let skillScore = 0;
       let interestScore = 0;
 
-      // ✅ Improved Skill Matching (Checks **word boundaries**)
+      // ✅ Match skills
       if (career.requiredSkills) {
-        skillScore = career.requiredSkills.reduce((score, skill) => {
-          return skillWords.has(skill.toLowerCase()) ? score + 1 : score;
-        }, 0);
+        skillScore = career.requiredSkills.filter((skill) =>
+          skills.toLowerCase().includes(skill.toLowerCase())
+        ).length;
       }
 
-      // ✅ Improved Interest Matching (Keyword Frequency Analysis)
-      const combinedText = (career.description + " " + (career.longDescription || "")).toLowerCase();
-      interestScore = Array.from(interestWords).reduce((score, word) => {
-        return score + (combinedText.split(word).length - 1); // Count occurrences
-      }, 0);
+      // ✅ Match interests
+      if (career.description.toLowerCase().includes(interests.toLowerCase())) {
+        interestScore += 1;
+      }
 
       // ✅ Extract salaryMin and salaryMax from salaryRange
       const salaryMatch = career.salaryRange.match(/\$([\d,]+) - \$([\d,]+)/);
       const salaryMin = salaryMatch ? parseInt(salaryMatch[1].replace(/,/g, ""), 10) : null;
       const salaryMax = salaryMatch ? parseInt(salaryMatch[2].replace(/,/g, ""), 10) : null;
-
-      // ✅ Normalize career factors (if null, assume a median value)
-      const demandScore = career.demand ?? 5; // Default if null
-      const growthScore = career.growthPotential ?? 5; // Default if null
-      const salaryScore = salaryMax ? salaryMax / 10000 : 5; // Scale salary range
-
-      // ✅ Calculate weighted total score
-      const totalScore = (
-        (skillScore * SKILL_WEIGHT) +
-        (interestScore * INTEREST_WEIGHT) +
-        (demandScore * DEMAND_WEIGHT) +
-        (growthScore * GROWTH_WEIGHT) +
-        (salaryScore * SALARY_WEIGHT)
-      );
 
       return {
         id: career.id,
@@ -168,29 +141,27 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         growthPotential: career.growthPotential,
         salaryMin,
         salaryMax,
-        totalScore
+        totalScore: skillScore + interestScore,
       };
     });
 
     // ✅ Sort careers by score in descending order
     const sortedCareers = scoredCareers.sort((a, b) => b.totalScore - a.totalScore);
 
-    // ✅ Select top recommendation
+    // ✅ Select the **best matching** career
     const topRecommendation = sortedCareers[0];
 
-    // ✅ Only include additional recommendations if they have at least **80% of the top score** but not less than 60%
+    // ✅ Only include additional recommendations if they are **80% as relevant as the top one**
     const additionalRecommendations = sortedCareers
       .slice(1)
-      .filter(career => career.totalScore >= topRecommendation.totalScore * 0.8 && career.totalScore >= 60);
+      .filter(career => career.totalScore >= topRecommendation.totalScore * 0.8);
 
-    // ✅ Combine and return results (1 to 2 recommendations max)
-    return [topRecommendation, ...additionalRecommendations].slice(0, 2);
+    // ✅ Combine and return results (1 to 3 recommendations max)
+    return [topRecommendation, ...additionalRecommendations].slice(0, 3);
 
   } catch (error) {
     console.error("❌ Error generating recommendations:", error);
     return [];
   }
 };
-
-
 
