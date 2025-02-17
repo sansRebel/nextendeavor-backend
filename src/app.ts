@@ -8,13 +8,19 @@ import { authenticateUser } from "./middlewares/authMiddlewares";
 
 const app = express();
 
+const allowedOrigins = [
+  "https://nextendeavor.vercel.app", // ✅ Allow your Vercel frontend
+  "http://localhost:3000" // ✅ Allow local development
+];
+
 app.use(
-    cors({
-      origin: process.env.FRONTEND_URL || "http://localhost:3000", // Allow frontend requests
-      credentials: true, // Allow sending cookies or auth headers
-      methods: ["GET", "POST", "PUT", "DELETE"], // Allowed methods
-      allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
-    })
+  cors({
+    origin: allowedOrigins,
+    credentials: true, // ✅ Important if using cookies/sessions
+    methods: "GET,POST,PUT,DELETE,OPTIONS", // ✅ Specify allowed methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
+
+  })
 );
 
 
