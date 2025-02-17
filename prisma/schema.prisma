@@ -40,7 +40,6 @@ model Career {
   industry        String?  // Ensure this field exists
   demand         Int?
   growthPotential Int? // Ensure this field exists
-  videoURL        String?
   recommendations Recommendation[]
 }
 

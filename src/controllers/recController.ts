@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { error } from "console";
 
 const prisma = new PrismaClient();
 
@@ -134,5 +135,25 @@ export const clearRecommendations = async (req: AuthenticatedRequest, res: Respo
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: "Failed to clear recommendations" });
+    }
+};
+
+export const viewCareer = async (req: Request, res: Response): Promise<void> => {
+    const {careerId} = req.params;
+
+    try {
+        const career = await prisma.career.findUnique({
+            where: {id: careerId}
+        });
+
+        if (!career){
+            res.status(404).json({ error: "Career not found"});
+            return;
+        }
+
+        res.status(200).json(career);
+    }catch(error) {
+        console.error("Error fetching career", error);
+        res.status(500).json({error: "Internal server error"});
     }
 };
