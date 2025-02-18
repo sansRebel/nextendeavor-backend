@@ -7,20 +7,16 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 dotenv.config();
 
-process.env.GOOGLE_APPLICATION_CREDENTIALS = "/etc/secrets/nextendeavor-chatbot-h9ng-4ea81aa5f9d3.json";
+const googleCredentials = {
+  type: "service_account",
+  project_id: process.env.GOOGLE_PROJECT_ID,
+  private_key: (process.env.GOOGLE_PRIVATE_KEY || "").replace(/\\n/g, "\n"),
+  client_email: process.env.GOOGLE_CLIENT_EMAIL,
+};
 
-console.log("✅ Using Service Account Path:", process.env.GOOGLE_APPLICATION_CREDENTIALS);
 
-if (!fs.existsSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string)) {
-  console.error("❌ ERROR: Service account JSON file NOT FOUND at", process.env.GOOGLE_APPLICATION_CREDENTIALS);
-} else {
-  const serviceAccount = JSON.parse(fs.readFileSync(process.env.GOOGLE_APPLICATION_CREDENTIALS as string, "utf8"));
-  console.log("✅ Service Account Email:", serviceAccount.client_email);
-}
+const sessionClient = new SessionsClient({ credentials: googleCredentials });
 
-const sessionClient = new SessionsClient({
-  keyFilename: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-});
 
 export const dialogflowWebhook = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -33,7 +29,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
 
     const message = req.body.message;
     const sessionId = req.body.sessionId || "default-session";
-    const projectId = process.env.DIALOGFLOW_PROJECT_ID || "nextendeavor-chatbot-h9ng";
+    const projectId = process.env.GOOGLE_PROJECT_ID || "nextendeavor-chatbot-h9ng";
     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
     console.log(" Sending request to Dialogflow with Project ID:", projectId);
