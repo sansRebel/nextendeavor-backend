@@ -62,8 +62,8 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     let recommendations: { id: string; title: string; description: string; requiredSkills: string[]; industry: string | null; demand: number | null; growthPotential: number | null; salaryMin: number | null; salaryMax: number | null; totalScore: number; }[] = [];
 
     if (intentName === "Career Recommendation") {
-      const skills = parameters.skills?.stringValue || "";
-      const interests = parameters.interests?.stringValue || "";
+      const skills = parameters.skill?.stringValue || "";
+      const interests = parameters.interest?.stringValue || "";
 
       if (skills && interests) {
         console.log(" Extracted Skills:", skills);
