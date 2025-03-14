@@ -32,7 +32,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     const projectId = process.env.GOOGLE_PROJECT_ID || "nextendeavor-chatbot-h9ng";
     const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
 
-    console.log(" Sending request to Dialogflow with Project ID:", projectId);
+    console.log("🟢 Sending request to Dialogflow with Project ID:", projectId);
 
     const request = {
       session: sessionPath,
@@ -48,16 +48,43 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     const queryResult = responses[0]?.queryResult;
 
     if (!queryResult) {
-      console.error(" Error: Missing queryResult in Dialogflow response.");
+      console.error("❌ Error: Missing queryResult in Dialogflow response.");
       res.status(500).json({ error: "Dialogflow did not return a valid response." });
       return;
     }
 
-    console.log(" Dialogflow Response:", queryResult);
+    console.log("🟢 Dialogflow Response:", queryResult);
 
     const intentName = queryResult.intent?.displayName || "";
-    const action = queryResult.action || ""; // Extract the action name
+    const action = queryResult.action || ""; // Extract action name
     const parameters = queryResult.parameters?.fields || {}; // Extract parameters
+    const outputContexts = queryResult.outputContexts || []; // Retrieve context history
+
+    // ✅ Retrieve previously stored values from context (if any)
+    let previousSkills = "";
+    let previousInterests = "";
+
+    outputContexts.forEach((ctx: any) => {
+      if (ctx.name.includes("career_recommendation")) {
+        previousSkills = ctx.parameters?.skills?.stringValue || "";
+        previousInterests = ctx.parameters?.interests?.stringValue || "";
+      }
+    });
+
+    // ✅ Extract current user-provided values
+    let skills = parameters.skills?.stringValue || parameters.skills?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
+    let interests = parameters.interests?.stringValue || parameters.interests?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
+
+    // ✅ Preserve previous values and merge with new values
+    if (previousSkills && skills) {
+      skills = previousSkills + ", " + skills;
+    }
+    if (previousInterests && interests) {
+      interests = previousInterests + ", " + interests;
+    }
+
+    console.log("🟢 Final Extracted Skills:", skills);
+    console.log("🟢 Final Extracted Interests:", interests);
 
     let responseMessage = queryResult.fulfillmentText || "No response from Dialogflow.";
     let recommendations: {
@@ -73,19 +100,14 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       totalScore: number;
     }[] = [];
 
-    // ✅ Check if the correct action is triggered
+    // ✅ Process Career Recommendation if action is triggered
     if (action === "career_recommendation") {
-      // Extract skills & interests from new parameter names
-      const skills = parameters.skills?.stringValue || parameters.skills?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
-      const interests = parameters.interests?.stringValue || parameters.interests?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
-
-      console.log(" Extracted Skills:", skills);
-      console.log(" Extracted Interests:", interests);
-
       if (skills && interests) {
         recommendations = await generateCareerRecommendations(skills, interests);
         console.log("✅ Generated Career Recommendations:", recommendations);
         responseMessage = "Your recommendations have been generated below.";
+      } else {
+        responseMessage = "Please provide both your skills and interests to proceed.";
       }
     }
 
@@ -100,6 +122,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ error: "Failed to connect to Dialogflow API" });
   }
 };
+
 
 
 const generateCareerRecommendations = async (skills: string, interests: string) => {
