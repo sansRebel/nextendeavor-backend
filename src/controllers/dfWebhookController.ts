@@ -56,23 +56,38 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     console.log(" Dialogflow Response:", queryResult);
 
     const intentName = queryResult.intent?.displayName || "";
+    const action = queryResult.action || ""; // Extract the action name
     const parameters = queryResult.parameters?.fields || {}; // Extract parameters
 
     let responseMessage = queryResult.fulfillmentText || "No response from Dialogflow.";
-    let recommendations: { id: string; title: string; description: string; requiredSkills: string[]; industry: string | null; demand: number | null; growthPotential: number | null; salaryMin: number | null; salaryMax: number | null; totalScore: number; }[] = [];
+    let recommendations: {
+      id: string;
+      title: string;
+      description: string;
+      requiredSkills: string[];
+      industry: string | null;
+      demand: number | null;
+      growthPotential: number | null;
+      salaryMin: number | null;
+      salaryMax: number | null;
+      totalScore: number;
+    }[] = [];
 
-    if (intentName === "Career Recommendation") {
-      const skills = parameters.skill?.stringValue || "";
-      const interests = parameters.interest?.stringValue || "";
+    // ✅ Check if the correct action is triggered
+    if (action === "career_recommendation") {
+      // Extract skills & interests from new parameter names
+      const skills = parameters.skills?.stringValue || parameters.skills?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
+      const interests = parameters.interests?.stringValue || parameters.interests?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
+
+      console.log(" Extracted Skills:", skills);
+      console.log(" Extracted Interests:", interests);
 
       if (skills && interests) {
-        console.log(" Extracted Skills:", skills);
-        console.log(" Extracted Interests:", interests);
-
         recommendations = await generateCareerRecommendations(skills, interests);
-
         console.log("✅ Generated Career Recommendations:", recommendations);
         responseMessage = "Your recommendations have been generated below.";
+      } else {
+        responseMessage = "Please provide both your skills and interests to proceed.";
       }
     }
 
@@ -83,10 +98,11 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     });
 
   } catch (error) {
-    console.error(" Dialogflow API Error:", error);
+    console.error("❌ Dialogflow API Error:", error);
     res.status(500).json({ error: "Failed to connect to Dialogflow API" });
   }
 };
+
 
 const generateCareerRecommendations = async (skills: string, interests: string) => {
   try {
