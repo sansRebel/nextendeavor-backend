@@ -86,7 +86,12 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
         recommendations = await generateCareerRecommendations(skills, interests);
         console.log("✅ Generated Career Recommendations:", recommendations);
         responseMessage = "Your recommendations have been generated below.";
-      } else {
+      }else if (skills){
+        responseMessage = "What are you're interests?"
+      }else if (interests){
+        responseMessage = "What are you're skills?"
+
+      }else {
         responseMessage = "Please provide both your skills and interests to proceed.";
       }
     }
