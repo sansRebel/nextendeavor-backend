@@ -60,8 +60,9 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     const parameters = queryResult.parameters?.fields || {};
 
     // ✅ Extract skills & interests directly from Dialogflow
-    const skills = parameters.skills?.stringValue || "";
-    const interests = parameters.interests?.stringValue || "";
+    const skills = parameters.skills?.listValue?.values?.map(v => v.stringValue).join(", ") || parameters.skills?.stringValue || "";
+    const interests = parameters.interests?.listValue?.values?.map(v => v.stringValue).join(", ") || parameters.interests?.stringValue || "";
+
 
     console.log("🟢 Extracted Skills:", skills);
     console.log("🟢 Extracted Interests:", interests);
