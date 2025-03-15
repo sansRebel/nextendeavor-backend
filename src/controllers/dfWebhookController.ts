@@ -56,11 +56,11 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     console.log("🟢 Dialogflow Response:", queryResult);
 
     const intentName = queryResult.intent?.displayName || "";
-    const action = queryResult.action || ""; // Extract action name
-    const parameters = queryResult.parameters?.fields || {}; // Extract parameters
-    const outputContexts = queryResult.outputContexts || []; // Retrieve context history
+    const action = queryResult.action || "";
+    const parameters = queryResult.parameters?.fields || {};
+    const outputContexts = queryResult.outputContexts || [];
 
-    // ✅ Retrieve previously stored values from context (if any)
+    // ✅ Retrieve previous skills & interests from context
     let previousSkills = "";
     let previousInterests = "";
 
@@ -71,11 +71,35 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       }
     });
 
-    // ✅ Extract current user-provided values
-    let skills = parameters.skills?.stringValue || parameters.skills?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
-    let interests = parameters.interests?.stringValue || parameters.interests?.listValue?.values?.map(v => v.stringValue).join(", ") || "";
+    // ✅ Extract new user input from `@sys.any`
+    let skills = parameters.skills?.stringValue || "";
+    let interests = parameters.interests?.stringValue || "";
 
-    // ✅ Preserve previous values and merge with new values
+    // ✅ If both skills and interests exist in one sentence, split them
+    if (!interests && !skills && message.includes("and")) {
+      const splitMessage = message.split("and");
+      skills = splitMessage[0].trim();
+      interests = splitMessage[1].trim();
+    }
+
+    // ✅ Validate input (Reject gibberish input)
+    const isValidInput = (text: string) => /^[A-Za-z0-9,.\s]+$/.test(text) && text.length > 2;
+
+    if (!isValidInput(skills) && skills) {
+      res.json({
+        fulfillmentText: "I couldn't recognize your skills. Please enter valid skills like 'Programming' or 'Marketing'.",
+      });
+      return;
+    }
+
+    if (!isValidInput(interests) && interests) {
+      res.json({
+        fulfillmentText: "I couldn't recognize your interests. Please enter valid interests like 'AI' or 'Cybersecurity'.",
+      });
+      return;
+    }
+
+    // ✅ Preserve previous values (merge new values)
     if (previousSkills && skills) {
       skills = previousSkills + ", " + skills;
     }
@@ -106,7 +130,9 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
         recommendations = await generateCareerRecommendations(skills, interests);
         console.log("✅ Generated Career Recommendations:", recommendations);
         responseMessage = "Your recommendations have been generated below.";
-      } 
+      } else {
+        responseMessage = "Please provide both your skills and interests to proceed.";
+      }
     }
 
     res.json({
@@ -120,6 +146,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ error: "Failed to connect to Dialogflow API" });
   }
 };
+
 
 
 
