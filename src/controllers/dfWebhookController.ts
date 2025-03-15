@@ -163,12 +163,49 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
     // ✅ Select the **best matching** career
     const topRecommendation = sortedCareers[0];
 
-    // ✅ Only include additional recommendations if they are **80% as relevant as the top one**
+    // ✅ If no careers match, fallback to "Entrepreneur"
+    if (!topRecommendation || topRecommendation.totalScore === 0) {
+      console.log("⚠️ No strong matches found, defaulting to 'Entrepreneur'.");
+    
+      const entrepreneurCareer = await prisma.career.findFirst({
+        where: { title: "Entrepreneur" },
+        select: {
+          id: true,
+          title: true,
+          description: true,
+          requiredSkills: true,
+          industry: true,
+          demand: true,
+          growthPotential: true,
+          salaryRange: true,
+        },
+      });
+    
+      if (entrepreneurCareer) {
+        const salaryMatch = entrepreneurCareer.salaryRange?.match(/\$([\d,]+) - \$([\d,]+)/);
+        const salaryMin = salaryMatch ? parseInt(salaryMatch[1].replace(/,/g, ""), 10) : null;
+        const salaryMax = salaryMatch ? parseInt(salaryMatch[2].replace(/,/g, ""), 10) : null;
+    
+        return [{
+          id: entrepreneurCareer.id,
+          title: entrepreneurCareer.title,
+          description: entrepreneurCareer.description,
+          requiredSkills: entrepreneurCareer.requiredSkills,
+          industry: entrepreneurCareer.industry,
+          demand: entrepreneurCareer.demand,
+          growthPotential: entrepreneurCareer.growthPotential,
+          salaryMin,
+          salaryMax,
+          totalScore: 0, // ✅ Assign a default score for fallback
+        }];
+      }
+    }
+    
+
     const additionalRecommendations = sortedCareers
       .slice(1)
       .filter(career => career.totalScore >= topRecommendation.totalScore * 0.8);
 
-    // ✅ Combine and return results (1 to 3 recommendations max)
     return [topRecommendation, ...additionalRecommendations].slice(0, 3);
 
   } catch (error) {
@@ -176,4 +213,5 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
     return [];
   }
 };
+
 
