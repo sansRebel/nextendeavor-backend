@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import { SessionsClient } from "@google-cloud/dialogflow";
 import dotenv from "dotenv";
-import fs from "fs";
+import stringSimilarity from "string-similarity";
 import { PrismaClient } from "@prisma/client";
+import assert from "assert";
 
 const prisma = new PrismaClient();
 dotenv.config();
@@ -104,6 +105,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
 
 
 
+
 const generateCareerRecommendations = async (skills: string, interests: string) => {
   try {
     const careers = await prisma.career.findMany({
@@ -121,27 +123,50 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
 
     console.log("🛠 Careers Fetched from Database:", careers);
 
-    // ✅ Calculate matching scores
+    // ✅ Define Weight Factors
+    const SKILL_WEIGHT = 2.5; // Skills should have more influence
+    const INTEREST_WEIGHT = 2.0; // Interests should have significant influence
+    const DEMAND_WEIGHT = 1.5; // Give weight to career demand
+    const GROWTH_WEIGHT = 1.2; // Give weight to growth potential
+
+    // ✅ Preprocess Input: Convert to Lowercase for Consistency
+    const normalizedSkills = skills.toLowerCase().split(", ").map(s => s.trim());
+    const normalizedInterests = interests.toLowerCase().split(", ").map(i => i.trim());
+
+    // ✅ Calculate Matching Scores
     const scoredCareers = careers.map((career) => {
       let skillScore = 0;
       let interestScore = 0;
 
-      // ✅ Match skills
+      // ✅ Match Skills (Using Fuzzy Matching)
       if (career.requiredSkills) {
-        skillScore = career.requiredSkills.filter((skill) =>
-          skills.toLowerCase().includes(skill.toLowerCase())
-        ).length;
+        skillScore = career.requiredSkills
+          .map(skill => {
+            const match = stringSimilarity.findBestMatch(skill.toLowerCase(), normalizedSkills);
+            return match.bestMatch.rating > 0.5 ? 1 : 0; // Consider it a match if similarity > 50%
+          })
+          .reduce((acc: any, val) => acc + val, 0);
       }
 
-      // ✅ Match interests
-      if (career.description.toLowerCase().includes(interests.toLowerCase())) {
-        interestScore += 1;
+      // ✅ Match Interests (Match Industry Instead of Description)
+      if (career.industry) {
+        const match = stringSimilarity.findBestMatch(career.industry.toLowerCase(), normalizedInterests);
+        if (match.bestMatch.rating > 0.5) {
+          interestScore = 1;
+        }
       }
 
-      // ✅ Extract salaryMin and salaryMax from salaryRange
+      // ✅ Extract Salary Min/Max from String
       const salaryMatch = career.salaryRange.match(/\$([\d,]+) - \$([\d,]+)/);
       const salaryMin = salaryMatch ? parseInt(salaryMatch[1].replace(/,/g, ""), 10) : null;
       const salaryMax = salaryMatch ? parseInt(salaryMatch[2].replace(/,/g, ""), 10) : null;
+
+      // ✅ Apply Weighting for Demand & Growth Potential
+      const weightedScore =
+        skillScore * SKILL_WEIGHT +
+        interestScore * INTEREST_WEIGHT +
+        (career.demand || 0) * DEMAND_WEIGHT +
+        (career.growthPotential || 0) * GROWTH_WEIGHT;
 
       return {
         id: career.id,
@@ -153,20 +178,20 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         growthPotential: career.growthPotential,
         salaryMin,
         salaryMax,
-        totalScore: skillScore + interestScore,
+        totalScore: weightedScore,
       };
     });
 
-    // ✅ Sort careers by score in descending order
+    // ✅ Sort Careers by Score in Descending Order
     const sortedCareers = scoredCareers.sort((a, b) => b.totalScore - a.totalScore);
 
-    // ✅ Select the **best matching** career
+    // ✅ Select the Best Matching Career
     const topRecommendation = sortedCareers[0];
 
-    // ✅ If no careers match, fallback to "Entrepreneur"
-    if (!topRecommendation || topRecommendation.totalScore === 0) {
+    // ✅ Fallback to "Entrepreneur" if No Good Match is Found
+    if (!topRecommendation || topRecommendation.totalScore < 3) {
       console.log("⚠️ No strong matches found, defaulting to 'Entrepreneur'.");
-    
+
       const entrepreneurCareer = await prisma.career.findFirst({
         where: { title: "Entrepreneur" },
         select: {
@@ -180,12 +205,12 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
           salaryRange: true,
         },
       });
-    
+
       if (entrepreneurCareer) {
         const salaryMatch = entrepreneurCareer.salaryRange?.match(/\$([\d,]+) - \$([\d,]+)/);
         const salaryMin = salaryMatch ? parseInt(salaryMatch[1].replace(/,/g, ""), 10) : null;
         const salaryMax = salaryMatch ? parseInt(salaryMatch[2].replace(/,/g, ""), 10) : null;
-    
+
         return [{
           id: entrepreneurCareer.id,
           title: entrepreneurCareer.title,
@@ -200,12 +225,13 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
         }];
       }
     }
-    
 
+    // ✅ Only include additional recommendations if they are 80% as relevant as the top one
     const additionalRecommendations = sortedCareers
       .slice(1)
       .filter(career => career.totalScore >= topRecommendation.totalScore * 0.8);
 
+    // ✅ Combine and return results (1 to 3 recommendations max)
     return [topRecommendation, ...additionalRecommendations].slice(0, 3);
 
   } catch (error) {
@@ -213,5 +239,7 @@ const generateCareerRecommendations = async (skills: string, interests: string) 
     return [];
   }
 };
+
+
 
 
