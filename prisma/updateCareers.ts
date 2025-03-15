@@ -3,33 +3,42 @@ import fs from "fs";
 
 const prisma = new PrismaClient();
 
-// Load updated skills from JSON file
-const updatedSkills = JSON.parse(fs.readFileSync("prisma/chunk1.json", "utf-8"));
+// Load careers from JSON file
+const careersData = JSON.parse(fs.readFileSync("prisma/chunk1.json", "utf-8"));
 
-const updateCareerSkills = async () => {
-  for (const career of updatedSkills) {
+const updateCareers = async () => {
+  for (const career of careersData) {
+    // Check if the career already exists to prevent duplicates
     const existingCareer = await prisma.career.findFirst({
-      where: { title: career.title }, // Match careers by title
+      where: { title: career.title },
     });
 
-    if (existingCareer) {
-      await prisma.career.update({
-        where: { id: existingCareer.id },
-        data: { requiredSkills: career.requiredSkills },
+    if (!existingCareer) {
+      await prisma.career.create({
+        data: {
+          title: career.title,
+          description: career.description,
+          longDescription: "To be updated...", // Placeholder, will update later
+          requiredSkills: career.requiredSkills,
+          salaryRange: career.salaryRange,
+          industry: career.industry,
+          demand: career.demand,
+          growthPotential: career.growthPotential,
+        },
       });
-      console.log(`✅ Updated skills for: ${career.title}`);
+      console.log(`✅ Added: ${career.title}`);
     } else {
-      console.log(`❌ Career not found: ${career.title}`);
+      console.log(`⚠️ Skipped (Already Exists): ${career.title}`);
     }
   }
 };
 
-updateCareerSkills()
+updateCareers()
   .then(() => {
-    console.log("✅ Career skills updated successfully!");
+    console.log("✅ Careers added successfully!");
     prisma.$disconnect();
   })
   .catch((error) => {
-    console.error("❌ Error updating career skills:", error);
+    console.error("❌ Error updating careers:", error);
     prisma.$disconnect();
   });
