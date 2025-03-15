@@ -58,57 +58,13 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     const intentName = queryResult.intent?.displayName || "";
     const action = queryResult.action || "";
     const parameters = queryResult.parameters?.fields || {};
-    const outputContexts = queryResult.outputContexts || [];
 
-    // ✅ Retrieve previous skills & interests from context
-    let previousSkills = "";
-    let previousInterests = "";
+    // ✅ Extract skills & interests directly from Dialogflow
+    const skills = parameters.skills?.stringValue || "";
+    const interests = parameters.interests?.stringValue || "";
 
-    outputContexts.forEach((ctx: any) => {
-      if (ctx.name.includes("career_recommendation")) {
-        previousSkills = ctx.parameters?.skills?.stringValue || "";
-        previousInterests = ctx.parameters?.interests?.stringValue || "";
-      }
-    });
-
-    // ✅ Extract new user input from `@sys.any`
-    let skills = parameters.skills?.stringValue || "";
-    let interests = parameters.interests?.stringValue || "";
-
-    // ✅ If both skills and interests exist in one sentence, split them
-    if (!interests && !skills && message.includes("and")) {
-      const splitMessage = message.split("and");
-      skills = splitMessage[0].trim();
-      interests = splitMessage[1].trim();
-    }
-
-    // ✅ Validate input (Reject gibberish input)
-    const isValidInput = (text: string) => /^[A-Za-z0-9,.\s]+$/.test(text) && text.length > 2;
-
-    if (!isValidInput(skills) && skills) {
-      res.json({
-        fulfillmentText: "I couldn't recognize your skills. Please enter valid skills like 'Programming' or 'Marketing'.",
-      });
-      return;
-    }
-
-    if (!isValidInput(interests) && interests) {
-      res.json({
-        fulfillmentText: "I couldn't recognize your interests. Please enter valid interests like 'AI' or 'Cybersecurity'.",
-      });
-      return;
-    }
-
-    // ✅ Preserve previous values (merge new values)
-    if (previousSkills && skills) {
-      skills = previousSkills + ", " + skills;
-    }
-    if (previousInterests && interests) {
-      interests = previousInterests + ", " + interests;
-    }
-
-    console.log("🟢 Final Extracted Skills:", skills);
-    console.log("🟢 Final Extracted Interests:", interests);
+    console.log("🟢 Extracted Skills:", skills);
+    console.log("🟢 Extracted Interests:", interests);
 
     let responseMessage = queryResult.fulfillmentText || "No response from Dialogflow.";
     let recommendations: {
@@ -124,13 +80,11 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
       totalScore: number;
     }[] = [];
 
-    // ✅ Process Career Recommendation if action is triggered
-    if (action === "career_recommendation") {
-      if (skills && interests) {
-        recommendations = await generateCareerRecommendations(skills, interests);
-        console.log("✅ Generated Career Recommendations:", recommendations);
-        responseMessage = "Your recommendations have been generated below.";
-      } 
+    // ✅ Generate Career Recommendations if action is triggered
+    if (action === "career_recommendation" && skills && interests) {
+      recommendations = await generateCareerRecommendations(skills, interests);
+      console.log("✅ Generated Career Recommendations:", recommendations);
+      responseMessage = "Your recommendations have been generated below.";
     }
 
     res.json({
@@ -144,6 +98,7 @@ export const dialogflowWebhook = async (req: Request, res: Response): Promise<vo
     res.status(500).json({ error: "Failed to connect to Dialogflow API" });
   }
 };
+
 
 
 
